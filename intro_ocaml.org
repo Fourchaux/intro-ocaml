@@ -13,7 +13,8 @@
    OCaml is part of the ML family, like SML (big brother) or F# (little brother).
 
    - 1973 :: ML
-     Check that http://www.nuprl.org/software/eventml/KreitzandRahli-ClassicML.pdf
+
+     Check the foundations from http://www.nuprl.org/software/eventml/KreitzandRahli-ClassicML.pdf
    - 1987-1992 :: Heavy CAML (LISP-based implementation)
    - 1990-1991 :: Caml Light
    - 1996 :: Objective Caml 1.00

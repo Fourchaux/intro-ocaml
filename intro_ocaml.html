@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-01-08 Wed 16:13 -->
+<!-- 2020-01-08 Wed 16:58 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Introduction to OCaml</title>
@@ -253,90 +253,90 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org3f6c266">1. Preamble</a></li>
-<li><a href="#org143a86a">2. Introduction</a>
+<li><a href="#org83af78d">1. Preamble</a></li>
+<li><a href="#org6aaef40">2. Introduction</a>
 <ul>
-<li><a href="#orgf21c86e">2.1. The <b>Categorical Abstract Machine Language</b></a></li>
-<li><a href="#org347035f">2.2. OCaml : an open-minded functional language</a></li>
-<li><a href="#org652b3f3">2.3. Bytecode and native code support</a></li>
-<li><a href="#org4748c79">2.4. Users</a>
+<li><a href="#org912a9e2">2.1. The <b>Categorical Abstract Machine Language</b></a></li>
+<li><a href="#org520d741">2.2. OCaml : an open-minded functional language</a></li>
+<li><a href="#org7629583">2.3. Bytecode and native code support</a></li>
+<li><a href="#orga14064a">2.4. Users</a>
 <ul>
-<li><a href="#org0c44422">2.4.1. Domains</a></li>
+<li><a href="#org492f0ec">2.4.1. Domains</a></li>
 </ul>
 </li>
-<li><a href="#org755c389">2.5. Tooling (as of )</a></li>
+<li><a href="#org23975ad">2.5. Tooling (as of )</a></li>
 </ul>
 </li>
-<li><a href="#org96fc8aa">3. Syntax Basics?</a>
+<li><a href="#orgfd7910a">3. Syntax Basics?</a>
 <ul>
-<li><a href="#org83f26b8">3.1. let-bindings</a></li>
-<li><a href="#org6025530">3.2. Functions</a></li>
-<li><a href="#orgef98252">3.3. Recursivity</a></li>
-<li><a href="#orga13fa79">3.4. Functions are first-class citizens</a></li>
-<li><a href="#orgc55955c">3.5. Evaluation is strict</a>
+<li><a href="#org093952e">3.1. let-bindings</a></li>
+<li><a href="#org148adfa">3.2. Functions</a></li>
+<li><a href="#org8401ef6">3.3. Recursivity</a></li>
+<li><a href="#orgcd1b2e9">3.4. Functions are first-class citizens</a></li>
+<li><a href="#org882594d">3.5. Evaluation is strict</a>
 <ul>
-<li><a href="#orge9b441b">3.5.1. Oddity</a></li>
+<li><a href="#org472037b">3.5.1. Oddity</a></li>
 </ul>
 </li>
-<li><a href="#org78030d7">3.6. Grouping information : Tuples</a></li>
-<li><a href="#orgce0ce60">3.7. Everything is a pattern</a></li>
-<li><a href="#org2903d29">3.8. Grouping information : Records (aka named tuples)</a></li>
-<li><a href="#org87c4894">3.9. ADT &amp; pattern matching</a></li>
-<li><a href="#org7648ceb">3.10. Labels (aka named arguments)</a></li>
-<li><a href="#org7f91c0f">3.11. Optional arguments</a></li>
-<li><a href="#org523f758">3.12. Optional arguments <b>are</b> option types</a></li>
-<li><a href="#orgef60771">3.13. Using named arguments in practice</a></li>
-<li><a href="#org7bcfac5">3.14. Nice to have: type-directed record disambiguation</a></li>
+<li><a href="#orgb1ac9b7">3.6. Grouping information : Tuples</a></li>
+<li><a href="#org3d54db2">3.7. Everything is a pattern</a></li>
+<li><a href="#org8791940">3.8. Grouping information : Records (aka named tuples)</a></li>
+<li><a href="#orgf73df03">3.9. ADT &amp; pattern matching</a></li>
+<li><a href="#org99f1ef2">3.10. Labels (aka named arguments)</a></li>
+<li><a href="#orga99a2b1">3.11. Optional arguments</a></li>
+<li><a href="#org5377c4d">3.12. Optional arguments <b>are</b> option types</a></li>
+<li><a href="#orgcee7adf">3.13. Using named arguments in practice</a></li>
+<li><a href="#org54d3953">3.14. Nice to have: type-directed record disambiguation</a></li>
 </ul>
 </li>
-<li><a href="#org828c72d">4. Imperative programming</a>
+<li><a href="#orgfb4a9fc">4. Imperative programming</a>
 <ul>
-<li><a href="#org9df8fb3">4.1. It's ok to be impure</a></li>
-<li><a href="#orgfb45f96">4.2. The unit type</a></li>
-<li><a href="#orgcd0dcf2">4.3. Trivia :: What's in a reference?</a></li>
-<li><a href="#org3064d76">4.4. Typical OCaml code</a></li>
-<li><a href="#orgb0dc906">4.5. Trivia :: Hashtables</a></li>
-<li><a href="#orgf8a3b8f">4.6. Pitfall(s)</a></li>
-<li><a href="#org81ed13e">4.7. Exceptions</a></li>
-<li><a href="#orgf57dc0e">4.8. Local exceptions &amp; pattern-matching mixed exceptions/values</a></li>
+<li><a href="#orgc008e66">4.1. It's ok to be impure</a></li>
+<li><a href="#orgd92931e">4.2. The unit type</a></li>
+<li><a href="#org18f8421">4.3. Trivia :: What's in a reference?</a></li>
+<li><a href="#org826d880">4.4. Typical OCaml code</a></li>
+<li><a href="#org713f781">4.5. Trivia :: Hashtables</a></li>
+<li><a href="#org6c347aa">4.6. Pitfall(s)</a></li>
+<li><a href="#org9c22793">4.7. Exceptions</a></li>
+<li><a href="#org17a937f">4.8. Local exceptions &amp; pattern-matching mixed exceptions/values</a></li>
 </ul>
 </li>
-<li><a href="#org989d892">5. More advanced topics</a>
+<li><a href="#orgc93a7a1">5. More advanced topics</a>
 <ul>
-<li><a href="#orgfe1f83b">5.1. What's a module?</a></li>
-<li><a href="#orgca9927b">5.2. Interface &amp; implementation :: <code>mli</code> &amp; <code>ml</code></a></li>
-<li><a href="#org93be030">5.3. Levels of type abstraction</a>
+<li><a href="#org9d06255">5.1. What's a module?</a></li>
+<li><a href="#org20fbbee">5.2. Interface &amp; implementation :: <code>mli</code> &amp; <code>ml</code></a></li>
+<li><a href="#org2fa5789">5.3. Levels of type abstraction</a>
 <ul>
-<li><a href="#org63e96b8">5.3.1. Open</a></li>
-<li><a href="#org14a0c5f">5.3.2. private</a></li>
-<li><a href="#orgc6bbf63">5.3.3. abstract</a></li>
+<li><a href="#org0484cee">5.3.1. Open</a></li>
+<li><a href="#orga57eb7c">5.3.2. private</a></li>
+<li><a href="#orga570af2">5.3.3. abstract</a></li>
 </ul>
 </li>
-<li><a href="#orgb7e8c87">5.4. Genericity</a>
+<li><a href="#org1e91653">5.4. Genericity</a>
 <ul>
-<li><a href="#org23ac444">5.4.1. Ad-hoc polymorphism</a></li>
-<li><a href="#org4b67afd">5.4.2. Functors (module generator)</a></li>
+<li><a href="#org05ecbe4">5.4.1. Ad-hoc polymorphism</a></li>
+<li><a href="#org06f8eea">5.4.2. Functors (module generator)</a></li>
 </ul>
 </li>
-<li><a href="#org6a86c4b">5.5. First-order modules</a>
+<li><a href="#orga9cb9d2">5.5. First-order modules</a>
 <ul>
-<li><a href="#org741e090">5.5.1. More involved example</a></li>
+<li><a href="#org2b4f2a8">5.5.1. More involved example</a></li>
 </ul>
 </li>
-<li><a href="#orgde7972a">5.6. Monadic style programming</a></li>
-<li><a href="#org4da8ffd">5.7. GADTs</a></li>
-<li><a href="#org75ce934">5.8. Death by GADTs</a></li>
-<li><a href="#org440fc7b">5.9. <code>Format</code>'ing text</a></li>
-<li><a href="#org9f8f447">5.10. Things that I did not talk about</a></li>
+<li><a href="#org8ba4ffd">5.6. Monadic style programming</a></li>
+<li><a href="#org7f04004">5.7. GADTs</a></li>
+<li><a href="#org8cdfb5a">5.8. Death by GADTs</a></li>
+<li><a href="#org55d1d8d">5.9. <code>Format</code>'ing text</a></li>
+<li><a href="#orga7427fe">5.10. Things that I did not talk about</a></li>
 </ul>
 </li>
-<li><a href="#orgc78600b">6. Conclusion</a></li>
+<li><a href="#orgbe525c6">6. Conclusion</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org3f6c266" class="outline-2">
-<h2 id="org3f6c266"><span class="section-number-2">1</span> Preamble</h2>
+<div id="outline-container-org83af78d" class="outline-2">
+<h2 id="org83af78d"><span class="section-number-2">1</span> Preamble</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 This intro is partial ;-)
@@ -344,20 +344,25 @@ This intro is partial ;-)
 </div>
 </div>
 
-<div id="outline-container-org143a86a" class="outline-2">
-<h2 id="org143a86a"><span class="section-number-2">2</span> Introduction</h2>
+<div id="outline-container-org6aaef40" class="outline-2">
+<h2 id="org6aaef40"><span class="section-number-2">2</span> Introduction</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-orgf21c86e" class="outline-3">
-<h3 id="orgf21c86e"><span class="section-number-3">2.1</span> The <b>Categorical Abstract Machine Language</b></h3>
+<div id="outline-container-org912a9e2" class="outline-3">
+<h3 id="org912a9e2"><span class="section-number-3">2.1</span> The <b>Categorical Abstract Machine Language</b></h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 OCaml is part of the ML family, like SML (big brother) or F# (little brother).
 </p>
 
 <dl class="org-dl">
-<dt>1973</dt><dd>ML
-Check that <a href="http://www.nuprl.org/software/eventml/KreitzandRahli-ClassicML.pdf">http://www.nuprl.org/software/eventml/KreitzandRahli-ClassicML.pdf</a></dd>
+<dt>1973</dt><dd><p>
+ML
+</p>
+
+<p>
+Check the foundations from <a href="http://www.nuprl.org/software/eventml/KreitzandRahli-ClassicML.pdf">http://www.nuprl.org/software/eventml/KreitzandRahli-ClassicML.pdf</a>
+</p></dd>
 <dt>1987-1992</dt><dd>Heavy CAML (LISP-based implementation)</dd>
 <dt>1990-1991</dt><dd>Caml Light</dd>
 <dt>1996</dt><dd>Objective Caml 1.00</dd>
@@ -367,8 +372,8 @@ Check that <a href="http://www.nuprl.org/software/eventml/KreitzandRahli-Classic
 </div>
 </div>
 
-<div id="outline-container-org347035f" class="outline-3">
-<h3 id="org347035f"><span class="section-number-3">2.2</span> OCaml : an open-minded functional language</h3>
+<div id="outline-container-org520d741" class="outline-3">
+<h3 id="org520d741"><span class="section-number-3">2.2</span> OCaml : an open-minded functional language</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 It is <b>not</b> a purely functional language: imperative programming is part of
@@ -386,8 +391,8 @@ There have been various efforts to provide "batteries".
 </div>
 
 
-<div id="outline-container-org652b3f3" class="outline-3">
-<h3 id="org652b3f3"><span class="section-number-3">2.3</span> Bytecode and native code support</h3>
+<div id="outline-container-org7629583" class="outline-3">
+<h3 id="org7629583"><span class="section-number-3">2.3</span> Bytecode and native code support</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 2 compilers for the price of one:
@@ -406,8 +411,8 @@ works anywhere you have a C compiler</li>
 
 
 
-<div id="outline-container-org4748c79" class="outline-3">
-<h3 id="org4748c79"><span class="section-number-3">2.4</span> Users</h3>
+<div id="outline-container-orga14064a" class="outline-3">
+<h3 id="orga14064a"><span class="section-number-3">2.4</span> Users</h3>
 <div class="outline-text-3" id="text-2-4">
 <ul class="org-ul">
 <li>(Mostly French) academic circles
@@ -423,8 +428,8 @@ works anywhere you have a C compiler</li>
 </div>
 
 
-<div id="outline-container-org0c44422" class="outline-4">
-<h4 id="org0c44422"><span class="section-number-4">2.4.1</span> Domains</h4>
+<div id="outline-container-org492f0ec" class="outline-4">
+<h4 id="org492f0ec"><span class="section-number-4">2.4.1</span> Domains</h4>
 <div class="outline-text-4" id="text-2-4-1">
 <ul class="org-ul">
 <li>compilers</li>
@@ -437,8 +442,8 @@ works anywhere you have a C compiler</li>
 </div>
 
 
-<div id="outline-container-org755c389" class="outline-3">
-<h3 id="org755c389"><span class="section-number-3">2.5</span> Tooling (as of )</h3>
+<div id="outline-container-org23975ad" class="outline-3">
+<h3 id="org23975ad"><span class="section-number-3">2.5</span> Tooling (as of )</h3>
 <div class="outline-text-3" id="text-2-5">
 <dl class="org-dl">
 <dt>the <a href="https://github.com/ocaml/ocaml">compiler</a></dt><dd>last release is 4.09 (2019-09-18)</dd>
@@ -481,12 +486,12 @@ Check out
 
 
 
-<div id="outline-container-org96fc8aa" class="outline-2">
-<h2 id="org96fc8aa"><span class="section-number-2">3</span> Syntax Basics?</h2>
+<div id="outline-container-orgfd7910a" class="outline-2">
+<h2 id="orgfd7910a"><span class="section-number-2">3</span> Syntax Basics?</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org83f26b8" class="outline-3">
-<h3 id="org83f26b8"><span class="section-number-3">3.1</span> let-bindings</h3>
+<div id="outline-container-org093952e" class="outline-3">
+<h3 id="org093952e"><span class="section-number-3">3.1</span> let-bindings</h3>
 <div class="outline-text-3" id="text-3-1">
 <div class="org-src-container">
 <pre class="src src-ocaml"><span style="color: #34495e;">let</span> <span style="color: #9b59b6;">x</span> = <span style="color: #2492db; font-weight: bold;">Pervasives.</span>read_int <span style="color: #7f8c8d;">()</span> <span style="color: #34495e;">in</span>
@@ -499,8 +504,8 @@ Check out
 </div>
 </div>
 
-<div id="outline-container-org6025530" class="outline-3">
-<h3 id="org6025530"><span class="section-number-3">3.2</span> Functions</h3>
+<div id="outline-container-org148adfa" class="outline-3">
+<h3 id="org148adfa"><span class="section-number-3">3.2</span> Functions</h3>
 <div class="outline-text-3" id="text-3-2">
 <div class="org-src-container">
 <pre class="src src-ocaml"><span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">add</span> <span style="color: #9b59b6;">x</span> <span style="color: #9b59b6;">y</span> =
@@ -532,8 +537,8 @@ add1 2 <span style="color: #ff4500;">;;</span>
 </div>
 
 
-<div id="outline-container-orgef98252" class="outline-3">
-<h3 id="orgef98252"><span class="section-number-3">3.3</span> Recursivity</h3>
+<div id="outline-container-org8401ef6" class="outline-3">
+<h3 id="org8401ef6"><span class="section-number-3">3.3</span> Recursivity</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 Recursive functions are explicitly qualified by the <b>rec</b> keyword.
@@ -567,8 +572,8 @@ Functions are not recursive by default.
 
 
 
-<div id="outline-container-orga13fa79" class="outline-3">
-<h3 id="orga13fa79"><span class="section-number-3">3.4</span> Functions are first-class citizens</h3>
+<div id="outline-container-orgcd1b2e9" class="outline-3">
+<h3 id="orgcd1b2e9"><span class="section-number-3">3.4</span> Functions are first-class citizens</h3>
 <div class="outline-text-3" id="text-3-4">
 <div class="org-src-container">
 <pre class="src src-ocaml"><span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">[max cmp l] computes the maximun element of a list [l] provided a [cmp]</span>
@@ -599,8 +604,8 @@ max <span style="color: #2492db; font-weight: bold;">Pervasives.</span>compare <
 </div>
 </div>
 
-<div id="outline-container-orgc55955c" class="outline-3">
-<h3 id="orgc55955c"><span class="section-number-3">3.5</span> Evaluation is strict</h3>
+<div id="outline-container-org882594d" class="outline-3">
+<h3 id="org882594d"><span class="section-number-3">3.5</span> Evaluation is strict</h3>
 <div class="outline-text-3" id="text-3-5">
 <p>
 Like in most programming languages ;-)
@@ -626,8 +631,8 @@ dadd <span style="color: #7f8c8d;">(</span>double 1<span style="color: #7f8c8d;"
 </p>
 </div>
 
-<div id="outline-container-orge9b441b" class="outline-4">
-<h4 id="orge9b441b"><span class="section-number-4">3.5.1</span> Oddity</h4>
+<div id="outline-container-org472037b" class="outline-4">
+<h4 id="org472037b"><span class="section-number-4">3.5.1</span> Oddity</h4>
 <div class="outline-text-4" id="text-3-5-1">
 <p>
 Evaluation order for function arguments is <b>unspecified</b>.
@@ -641,8 +646,8 @@ It is usually left-to-right, though.
 </div>
 
 
-<div id="outline-container-org78030d7" class="outline-3">
-<h3 id="org78030d7"><span class="section-number-3">3.6</span> Grouping information : Tuples</h3>
+<div id="outline-container-orgb1ac9b7" class="outline-3">
+<h3 id="orgb1ac9b7"><span class="section-number-3">3.6</span> Grouping information : Tuples</h3>
 <div class="outline-text-3" id="text-3-6">
 <div class="org-src-container">
 <pre class="src src-ocaml"><span style="color: #34495e;">let</span> <span style="color: #9b59b6;">a</span> = 1, 2 <span style="color: #34495e;">in</span>
@@ -668,8 +673,8 @@ x + y
 
 
 
-<div id="outline-container-orgce0ce60" class="outline-3">
-<h3 id="orgce0ce60"><span class="section-number-3">3.7</span> Everything is a pattern</h3>
+<div id="outline-container-org3d54db2" class="outline-3">
+<h3 id="org3d54db2"><span class="section-number-3">3.7</span> Everything is a pattern</h3>
 <div class="outline-text-3" id="text-3-7">
 <div class="org-src-container">
 <pre class="src src-ocaml"><span style="color: #34495e;">type</span> <span style="color: #9b59b6;">point_3d</span> = float * float * float
@@ -703,8 +708,8 @@ x + y
 </div>
 </div>
 
-<div id="outline-container-org2903d29" class="outline-3">
-<h3 id="org2903d29"><span class="section-number-3">3.8</span> Grouping information : Records (aka named tuples)</h3>
+<div id="outline-container-org8791940" class="outline-3">
+<h3 id="org8791940"><span class="section-number-3">3.8</span> Grouping information : Records (aka named tuples)</h3>
 <div class="outline-text-3" id="text-3-8">
 <div class="org-src-container">
 <pre class="src src-ocaml"><span style="color: #34495e;">type</span> <span style="color: #9b59b6;">point_2d</span> = <span style="color: #7f8c8d;">{</span> x : float; y: float; <span style="color: #7f8c8d;">}</span>  <span style="color: #ff4500;">;;</span>
@@ -747,8 +752,8 @@ Records are limited to 2<sup>22</sup> − 1 fields 
 </div>
 
 
-<div id="outline-container-org87c4894" class="outline-3">
-<h3 id="org87c4894"><span class="section-number-3">3.9</span> ADT &amp; pattern matching</h3>
+<div id="outline-container-orgf73df03" class="outline-3">
+<h3 id="orgf73df03"><span class="section-number-3">3.9</span> ADT &amp; pattern matching</h3>
 <div class="outline-text-3" id="text-3-9">
 <p>
 Exhaustive and fragile pattern matching are reported by default.
@@ -823,8 +828,8 @@ For (way) more:
 </div>
 </div>
 
-<div id="outline-container-org7648ceb" class="outline-3">
-<h3 id="org7648ceb"><span class="section-number-3">3.10</span> Labels (aka named arguments)</h3>
+<div id="outline-container-org99f1ef2" class="outline-3">
+<h3 id="org99f1ef2"><span class="section-number-3">3.10</span> Labels (aka named arguments)</h3>
 <div class="outline-text-3" id="text-3-10">
 <p>
 Named arguments are mainly used for 2 reasons:
@@ -860,8 +865,8 @@ homogeneous naming betting on programmers' procrastination
 
 
 
-<div id="outline-container-org7f91c0f" class="outline-3">
-<h3 id="org7f91c0f"><span class="section-number-3">3.11</span> Optional arguments</h3>
+<div id="outline-container-orga99a2b1" class="outline-3">
+<h3 id="orga99a2b1"><span class="section-number-3">3.11</span> Optional arguments</h3>
 <div class="outline-text-3" id="text-3-11">
 <p>
 A special case of named arguments is optional arguments
@@ -900,8 +905,8 @@ create 2<span style="color: #ff4500;">;;</span>
 </div>
 
 
-<div id="outline-container-org523f758" class="outline-3">
-<h3 id="org523f758"><span class="section-number-3">3.12</span> Optional arguments <b>are</b> option types</h3>
+<div id="outline-container-org5377c4d" class="outline-3">
+<h3 id="org5377c4d"><span class="section-number-3">3.12</span> Optional arguments <b>are</b> option types</h3>
 <div class="outline-text-3" id="text-3-12">
 <div class="org-src-container">
 <pre class="src src-ocaml"><span style="color: #34495e;">type</span> <span style="color: #7f8c8d;">(</span><span style="color: #9b59b6;">'a, 'b</span><span style="color: #7f8c8d;">)</span><span style="color: #9b59b6;"> return</span> = <span style="color: #7f8c8d;">{</span>
@@ -930,8 +935,8 @@ create 2<span style="color: #ff4500;">;;</span>
 </div>
 </div>
 
-<div id="outline-container-orgef60771" class="outline-3">
-<h3 id="orgef60771"><span class="section-number-3">3.13</span> Using named arguments in practice</h3>
+<div id="outline-container-orgcee7adf" class="outline-3">
+<h3 id="orgcee7adf"><span class="section-number-3">3.13</span> Using named arguments in practice</h3>
 <div class="outline-text-3" id="text-3-13">
 <p>
 A commonly used recipe to construct functions with named arguments is:
@@ -944,8 +949,8 @@ A commonly used recipe to construct functions with named arguments is:
 </div>
 </div>
 
-<div id="outline-container-org7bcfac5" class="outline-3">
-<h3 id="org7bcfac5"><span class="section-number-3">3.14</span> Nice to have: type-directed record disambiguation</h3>
+<div id="outline-container-org54d3953" class="outline-3">
+<h3 id="org54d3953"><span class="section-number-3">3.14</span> Nice to have: type-directed record disambiguation</h3>
 <div class="outline-text-3" id="text-3-14">
 <div class="org-src-container">
 <pre class="src src-ocaml"><span style="color: #34495e;">type</span> <span style="color: #9b59b6;">t</span> = <span style="color: #7f8c8d;">{</span> x : float; y : int; <span style="color: #7f8c8d;">}</span> <span style="color: #ff4500;">;;</span>
@@ -975,12 +980,12 @@ Check out:
 
 
 
-<div id="outline-container-org828c72d" class="outline-2">
-<h2 id="org828c72d"><span class="section-number-2">4</span> Imperative programming</h2>
+<div id="outline-container-orgfb4a9fc" class="outline-2">
+<h2 id="orgfb4a9fc"><span class="section-number-2">4</span> Imperative programming</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-org9df8fb3" class="outline-3">
-<h3 id="org9df8fb3"><span class="section-number-3">4.1</span> It's ok to be impure</h3>
+<div id="outline-container-orgc008e66" class="outline-3">
+<h3 id="orgc008e66"><span class="section-number-3">4.1</span> It's ok to be impure</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 A bunch of OCaml primitive constructs are imperative.
@@ -1002,8 +1007,8 @@ No need to read Okasaki's book to understand their implementation ;-)
 </div>
 
 
-<div id="outline-container-orgfb45f96" class="outline-3">
-<h3 id="orgfb45f96"><span class="section-number-3">4.2</span> The unit type</h3>
+<div id="outline-container-orgd92931e" class="outline-3">
+<h3 id="orgd92931e"><span class="section-number-3">4.2</span> The unit type</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 The type of sequence elements (think 'statement') is <code>unit</code>, which is
@@ -1023,8 +1028,8 @@ inhabited by a single value <code>()</code>.
 </div>
 </div>
 
-<div id="outline-container-orgcd0dcf2" class="outline-3">
-<h3 id="orgcd0dcf2"><span class="section-number-3">4.3</span> Trivia :: What's in a reference?</h3>
+<div id="outline-container-org18f8421" class="outline-3">
+<h3 id="org18f8421"><span class="section-number-3">4.3</span> Trivia :: What's in a reference?</h3>
 <div class="outline-text-3" id="text-4-3">
 <div class="org-src-container">
 <pre class="src src-ocaml"><span style="color: #34495e;">let</span> <span style="color: #9b59b6;">x</span> = <span style="color: #34495e;">ref</span> 1 <span style="color: #ff4500;">;;</span>
@@ -1037,8 +1042,8 @@ inhabited by a single value <code>()</code>.
 </div>
 </div>
 
-<div id="outline-container-org3064d76" class="outline-3">
-<h3 id="org3064d76"><span class="section-number-3">4.4</span> Typical OCaml code</h3>
+<div id="outline-container-org826d880" class="outline-3">
+<h3 id="org826d880"><span class="section-number-3">4.4</span> Typical OCaml code</h3>
 <div class="outline-text-3" id="text-4-4">
 <p>
 Typical code mixes and matches functional and imperative features, usually
@@ -1082,8 +1087,8 @@ for efficiency reasons. You will not be castigated for doing so.
 </div>
 
 
-<div id="outline-container-orgb0dc906" class="outline-3">
-<h3 id="orgb0dc906"><span class="section-number-3">4.5</span> Trivia :: Hashtables</h3>
+<div id="outline-container-org713f781" class="outline-3">
+<h3 id="org713f781"><span class="section-number-3">4.5</span> Trivia :: Hashtables</h3>
 <div class="outline-text-3" id="text-4-5">
 <p>
 Hashtables have an interesting property : <code>add</code> does not remove old values!
@@ -1099,8 +1104,8 @@ Hashtables have an interesting property : <code>add</code> does not remove old v
 </div>
 </div>
 
-<div id="outline-container-orgf8a3b8f" class="outline-3">
-<h3 id="orgf8a3b8f"><span class="section-number-3">4.6</span> Pitfall(s)</h3>
+<div id="outline-container-org6c347aa" class="outline-3">
+<h3 id="org6c347aa"><span class="section-number-3">4.6</span> Pitfall(s)</h3>
 <div class="outline-text-3" id="text-4-6">
 <p>
 The use of <code>;</code> leads to some pitfalls for the beginner (and the guru not
@@ -1133,8 +1138,8 @@ paying enough attention).
 </div>
 </div>
 
-<div id="outline-container-org81ed13e" class="outline-3">
-<h3 id="org81ed13e"><span class="section-number-3">4.7</span> Exceptions</h3>
+<div id="outline-container-org9c22793" class="outline-3">
+<h3 id="org9c22793"><span class="section-number-3">4.7</span> Exceptions</h3>
 <div class="outline-text-3" id="text-4-7">
 <p>
 Exceptions are open algebraic data types with a dedicated construct <code>exception</code>
@@ -1160,8 +1165,8 @@ Exceptions are open algebraic data types with a dedicated construct <code>except
 
 
 
-<div id="outline-container-orgf57dc0e" class="outline-3">
-<h3 id="orgf57dc0e"><span class="section-number-3">4.8</span> Local exceptions &amp; pattern-matching mixed exceptions/values</h3>
+<div id="outline-container-org17a937f" class="outline-3">
+<h3 id="org17a937f"><span class="section-number-3">4.8</span> Local exceptions &amp; pattern-matching mixed exceptions/values</h3>
 <div class="outline-text-3" id="text-4-8">
 <div class="org-src-container">
 <pre class="src src-ocaml"><span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">find</span> <span style="color: #7f8c8d;">(</span><span style="color: #2980b9;">type</span> <span style="color: #9b59b6;">a</span><span style="color: #7f8c8d;">)</span> <span style="color: #7f8c8d;">(</span><span style="color: #9b59b6;">p</span>:<span style="color: #9b59b6;">a -&gt; bool</span><span style="color: #7f8c8d;">)</span> <span style="color: #7f8c8d;">(</span><span style="color: #9b59b6;">arr</span>:<span style="color: #9b59b6;">a array</span><span style="color: #7f8c8d;">)</span> =
@@ -1177,12 +1182,12 @@ Exceptions are open algebraic data types with a dedicated construct <code>except
 </div>
 
 
-<div id="outline-container-org989d892" class="outline-2">
-<h2 id="org989d892"><span class="section-number-2">5</span> More advanced topics</h2>
+<div id="outline-container-orgc93a7a1" class="outline-2">
+<h2 id="orgc93a7a1"><span class="section-number-2">5</span> More advanced topics</h2>
 <div class="outline-text-2" id="text-5">
 </div>
-<div id="outline-container-orgfe1f83b" class="outline-3">
-<h3 id="orgfe1f83b"><span class="section-number-3">5.1</span> What's a module?</h3>
+<div id="outline-container-org9d06255" class="outline-3">
+<h3 id="org9d06255"><span class="section-number-3">5.1</span> What's a module?</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 The moment you have 2 files, you will be manipulating <b>modules</b>.
@@ -1190,7 +1195,7 @@ The moment you have 2 files, you will be manipulating <b>modules</b>.
 
 <p>
 A module is an abstraction barrier to used to bundle together related
-definitions and functionalities.
+definitions and functionalities. In particular, it defines a namespace.
 </p>
 
 <p>
@@ -1208,10 +1213,8 @@ Modules can be recursive.
 </div>
 </div>
 
-
-
-<div id="outline-container-orgca9927b" class="outline-3">
-<h3 id="orgca9927b"><span class="section-number-3">5.2</span> Interface &amp; implementation :: <code>mli</code> &amp; <code>ml</code></h3>
+<div id="outline-container-org20fbbee" class="outline-3">
+<h3 id="org20fbbee"><span class="section-number-3">5.2</span> Interface &amp; implementation :: <code>mli</code> &amp; <code>ml</code></h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 <code>OCaml</code> programmers are encouraged to detach API interface (documentation,
@@ -1241,16 +1244,17 @@ functionalities/traits and <code>module</code> for implementing said modules.
 </div>
 
 
-<div id="outline-container-org93be030" class="outline-3">
-<h3 id="org93be030"><span class="section-number-3">5.3</span> Levels of type abstraction</h3>
+<div id="outline-container-org2fa5789" class="outline-3">
+<h3 id="org2fa5789"><span class="section-number-3">5.3</span> Levels of type abstraction</h3>
 <div class="outline-text-3" id="text-5-3">
 <p>
-Modules help to delimit abstraction barriers
+Modules help to delimit abstraction barriers and one can choose the desired
+level of abstraction.
 </p>
 </div>
 
-<div id="outline-container-org63e96b8" class="outline-4">
-<h4 id="org63e96b8"><span class="section-number-4">5.3.1</span> Open</h4>
+<div id="outline-container-org0484cee" class="outline-4">
+<h4 id="org0484cee"><span class="section-number-4">5.3.1</span> Open</h4>
 <div class="outline-text-4" id="text-5-3-1">
 <p>
 Open types can be directly constructed &amp; destructed
@@ -1293,8 +1297,8 @@ Open types can be directly constructed &amp; destructed
 </div>
 
 
-<div id="outline-container-org14a0c5f" class="outline-4">
-<h4 id="org14a0c5f"><span class="section-number-4">5.3.2</span> private</h4>
+<div id="outline-container-orga57eb7c" class="outline-4">
+<h4 id="orga57eb7c"><span class="section-number-4">5.3.2</span> private</h4>
 <div class="outline-text-4" id="text-5-3-2">
 <p>
 Private types can be constructed only by predefined functions, destructed by
@@ -1346,8 +1350,8 @@ usual pattern matching.
 </div>
 
 
-<div id="outline-container-orgc6bbf63" class="outline-4">
-<h4 id="orgc6bbf63"><span class="section-number-4">5.3.3</span> abstract</h4>
+<div id="outline-container-orga570af2" class="outline-4">
+<h4 id="orga570af2"><span class="section-number-4">5.3.3</span> abstract</h4>
 <div class="outline-text-4" id="text-5-3-3">
 <p>
 Abstract types can be constructed &amp; destructed only be predefined functions
@@ -1399,12 +1403,12 @@ Abstract types can be constructed &amp; destructed only be predefined functions
 </div>
 
 
-<div id="outline-container-orgb7e8c87" class="outline-3">
-<h3 id="orgb7e8c87"><span class="section-number-3">5.4</span> Genericity</h3>
+<div id="outline-container-org1e91653" class="outline-3">
+<h3 id="org1e91653"><span class="section-number-3">5.4</span> Genericity</h3>
 <div class="outline-text-3" id="text-5-4">
 </div>
-<div id="outline-container-org23ac444" class="outline-4">
-<h4 id="org23ac444"><span class="section-number-4">5.4.1</span> Ad-hoc polymorphism</h4>
+<div id="outline-container-org05ecbe4" class="outline-4">
+<h4 id="org05ecbe4"><span class="section-number-4">5.4.1</span> Ad-hoc polymorphism</h4>
 <div class="outline-text-4" id="text-5-4-1">
 <div class="org-src-container">
 <pre class="src src-ocaml"><span style="color: #34495e;">let</span> <span style="color: #34495e;">rec</span> <span style="color: #8e44ad; font-weight: bold;">length</span> <span style="color: #2980b9;">match</span> <span style="color: #9b59b6;">l</span> <span style="color: #2980b9;">with</span>
@@ -1416,8 +1420,8 @@ Abstract types can be constructed &amp; destructed only be predefined functions
 </div>
 </div>
 
-<div id="outline-container-org4b67afd" class="outline-4">
-<h4 id="org4b67afd"><span class="section-number-4">5.4.2</span> Functors (module generator)</h4>
+<div id="outline-container-org06f8eea" class="outline-4">
+<h4 id="org06f8eea"><span class="section-number-4">5.4.2</span> Functors (module generator)</h4>
 <div class="outline-text-4" id="text-5-4-2">
 <p>
 The standard library has functors for sets, maps (tree-based persistent
@@ -1471,8 +1475,8 @@ pp <span style="color: #2492db; font-weight: bold;">Format.</span>std_formatter 
 </div>
 </div>
 
-<div id="outline-container-org6a86c4b" class="outline-3">
-<h3 id="org6a86c4b"><span class="section-number-3">5.5</span> First-order modules</h3>
+<div id="outline-container-orga9cb9d2" class="outline-3">
+<h3 id="orga9cb9d2"><span class="section-number-3">5.5</span> First-order modules</h3>
 <div class="outline-text-3" id="text-5-5">
 <p>
 Modules can also be used as "first-class" values.
@@ -1512,8 +1516,8 @@ lmax <span style="color: #7f8c8d;">(</span><span style="color: #2980b9;">module<
 </div>
 </div>
 
-<div id="outline-container-org741e090" class="outline-4">
-<h4 id="org741e090"><span class="section-number-4">5.5.1</span> More involved example</h4>
+<div id="outline-container-org2b4f2a8" class="outline-4">
+<h4 id="org2b4f2a8"><span class="section-number-4">5.5.1</span> More involved example</h4>
 <div class="outline-text-4" id="text-5-5-1">
 <div class="org-src-container">
 <pre class="src src-ocaml"><span style="color: #34495e;">type</span> <span style="color: #7f8c8d;">(</span><span style="color: #9b59b6;">'var,'cst,'bop,'uop</span><span style="color: #7f8c8d;">)</span><span style="color: #9b59b6;"> expr</span> =
@@ -1575,8 +1579,8 @@ free_variables <span style="color: #7f8c8d;">(</span><span style="color: #2980b9
 
 
 
-<div id="outline-container-orgde7972a" class="outline-3">
-<h3 id="orgde7972a"><span class="section-number-3">5.6</span> Monadic style programming</h3>
+<div id="outline-container-org8ba4ffd" class="outline-3">
+<h3 id="org8ba4ffd"><span class="section-number-3">5.6</span> Monadic style programming</h3>
 <div class="outline-text-3" id="text-5-6">
 <p>
 The following type has been making a comeback.
@@ -1621,8 +1625,8 @@ operator
 </div>
 </div>
 
-<div id="outline-container-org4da8ffd" class="outline-3">
-<h3 id="org4da8ffd"><span class="section-number-3">5.7</span> GADTs</h3>
+<div id="outline-container-org7f04004" class="outline-3">
+<h3 id="org7f04004"><span class="section-number-3">5.7</span> GADTs</h3>
 <div class="outline-text-3" id="text-5-7">
 <p>
 Generalized Abstract Data Types are available in <code>OCaml</code> since version
@@ -1708,8 +1712,8 @@ eval term2 <span style="color: #ff4500;">;;</span>
 
 
 
-<div id="outline-container-org75ce934" class="outline-3">
-<h3 id="org75ce934"><span class="section-number-3">5.8</span> Death by GADTs</h3>
+<div id="outline-container-org8cdfb5a" class="outline-3">
+<h3 id="org8cdfb5a"><span class="section-number-3">5.8</span> Death by GADTs</h3>
 <div class="outline-text-3" id="text-5-8">
 <p>
 With great expressiveness comes great unreadability ;-)
@@ -1752,8 +1756,8 @@ With great expressiveness comes great unreadability ;-)
 </div>
 </div>
 
-<div id="outline-container-org440fc7b" class="outline-3">
-<h3 id="org440fc7b"><span class="section-number-3">5.9</span> <code>Format</code>'ing text</h3>
+<div id="outline-container-org55d1d8d" class="outline-3">
+<h3 id="org55d1d8d"><span class="section-number-3">5.9</span> <code>Format</code>'ing text</h3>
 <div class="outline-text-3" id="text-5-9">
 <p>
 The <code>Format</code> module is a nice <code>printf</code>-like pretty-printing facility
@@ -1824,8 +1828,8 @@ For more:
 </div>
 
 
-<div id="outline-container-org9f8f447" class="outline-3">
-<h3 id="org9f8f447"><span class="section-number-3">5.10</span> Things that I did not talk about</h3>
+<div id="outline-container-orga7427fe" class="outline-3">
+<h3 id="orga7427fe"><span class="section-number-3">5.10</span> Things that I did not talk about</h3>
 <div class="outline-text-3" id="text-5-10">
 <ul class="org-ul">
 <li><p>
@@ -1835,6 +1839,7 @@ Polymorphic variants
 <p>
 See <a href="http://www.yakobowski.org/publis/2008/jfla08.pdf">http://www.yakobowski.org/publis/2008/jfla08.pdf</a> (in French)
 </p></li>
+
 <li><p>
 Low-level representation
 </p>
@@ -1844,7 +1849,8 @@ Low-level representation
 </p></li>
 
 <li>Objects</li>
-<li>PPX extensions</li>
+<li>PPX syntax extensions (deriving, sexp, &#x2026;)</li>
+<li>Ecosystem (parsing, JSONing, SMTing, &#x2026;)</li>
 </ul>
 </div>
 </div>
@@ -1853,20 +1859,16 @@ Low-level representation
 
 
 
-<div id="outline-container-orgc78600b" class="outline-2">
-<h2 id="orgc78600b"><span class="section-number-2">6</span> Conclusion</h2>
+<div id="outline-container-orgbe525c6" class="outline-2">
+<h2 id="orgbe525c6"><span class="section-number-2">6</span> Conclusion</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 <code>OCaml</code> is <b>not</b> a language somehow stuck into a transformation to
-<code>Haskell</code>.
+<code>Haskell</code>.It follows different design choices, in the lineage of ML and SML.
 </p>
 
 <p>
 Is there something that is missing ?
-</p>
-
-<p>
-It follows different design choices, in the lineage of ML and SML.
 </p>
 </div>
 </div>
@@ -1874,7 +1876,7 @@ It follows different design choices, in the lineage of ML and SML.
 <div id="postamble" class="status">
 <p class="date">Date: 20200109</p>
 <p class="author">Author: Richard Bonichon</p>
-<p class="date">Created: 2020-01-08 Wed 16:13</p>
+<p class="date">Created: 2020-01-08 Wed 16:58</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
