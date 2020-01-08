@@ -2,9 +2,6 @@
 #+date: 20200109
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/setup/theme-readtheorg.setup
 
-* Read                                                             :noexport:
-  http://www.cs.ox.ac.uk/ralf.hinze/publications/With.pdf
-
 * Preamble
 
   This intro is partial ;-)
