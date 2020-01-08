@@ -1,0 +1,1881 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-01-08 Wed 16:13 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Introduction to OCaml</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Richard Bonichon" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Introduction to OCaml</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org3f6c266">1. Preamble</a></li>
+<li><a href="#org143a86a">2. Introduction</a>
+<ul>
+<li><a href="#orgf21c86e">2.1. The <b>Categorical Abstract Machine Language</b></a></li>
+<li><a href="#org347035f">2.2. OCaml : an open-minded functional language</a></li>
+<li><a href="#org652b3f3">2.3. Bytecode and native code support</a></li>
+<li><a href="#org4748c79">2.4. Users</a>
+<ul>
+<li><a href="#org0c44422">2.4.1. Domains</a></li>
+</ul>
+</li>
+<li><a href="#org755c389">2.5. Tooling (as of )</a></li>
+</ul>
+</li>
+<li><a href="#org96fc8aa">3. Syntax Basics?</a>
+<ul>
+<li><a href="#org83f26b8">3.1. let-bindings</a></li>
+<li><a href="#org6025530">3.2. Functions</a></li>
+<li><a href="#orgef98252">3.3. Recursivity</a></li>
+<li><a href="#orga13fa79">3.4. Functions are first-class citizens</a></li>
+<li><a href="#orgc55955c">3.5. Evaluation is strict</a>
+<ul>
+<li><a href="#orge9b441b">3.5.1. Oddity</a></li>
+</ul>
+</li>
+<li><a href="#org78030d7">3.6. Grouping information : Tuples</a></li>
+<li><a href="#orgce0ce60">3.7. Everything is a pattern</a></li>
+<li><a href="#org2903d29">3.8. Grouping information : Records (aka named tuples)</a></li>
+<li><a href="#org87c4894">3.9. ADT &amp; pattern matching</a></li>
+<li><a href="#org7648ceb">3.10. Labels (aka named arguments)</a></li>
+<li><a href="#org7f91c0f">3.11. Optional arguments</a></li>
+<li><a href="#org523f758">3.12. Optional arguments <b>are</b> option types</a></li>
+<li><a href="#orgef60771">3.13. Using named arguments in practice</a></li>
+<li><a href="#org7bcfac5">3.14. Nice to have: type-directed record disambiguation</a></li>
+</ul>
+</li>
+<li><a href="#org828c72d">4. Imperative programming</a>
+<ul>
+<li><a href="#org9df8fb3">4.1. It's ok to be impure</a></li>
+<li><a href="#orgfb45f96">4.2. The unit type</a></li>
+<li><a href="#orgcd0dcf2">4.3. Trivia :: What's in a reference?</a></li>
+<li><a href="#org3064d76">4.4. Typical OCaml code</a></li>
+<li><a href="#orgb0dc906">4.5. Trivia :: Hashtables</a></li>
+<li><a href="#orgf8a3b8f">4.6. Pitfall(s)</a></li>
+<li><a href="#org81ed13e">4.7. Exceptions</a></li>
+<li><a href="#orgf57dc0e">4.8. Local exceptions &amp; pattern-matching mixed exceptions/values</a></li>
+</ul>
+</li>
+<li><a href="#org989d892">5. More advanced topics</a>
+<ul>
+<li><a href="#orgfe1f83b">5.1. What's a module?</a></li>
+<li><a href="#orgca9927b">5.2. Interface &amp; implementation :: <code>mli</code> &amp; <code>ml</code></a></li>
+<li><a href="#org93be030">5.3. Levels of type abstraction</a>
+<ul>
+<li><a href="#org63e96b8">5.3.1. Open</a></li>
+<li><a href="#org14a0c5f">5.3.2. private</a></li>
+<li><a href="#orgc6bbf63">5.3.3. abstract</a></li>
+</ul>
+</li>
+<li><a href="#orgb7e8c87">5.4. Genericity</a>
+<ul>
+<li><a href="#org23ac444">5.4.1. Ad-hoc polymorphism</a></li>
+<li><a href="#org4b67afd">5.4.2. Functors (module generator)</a></li>
+</ul>
+</li>
+<li><a href="#org6a86c4b">5.5. First-order modules</a>
+<ul>
+<li><a href="#org741e090">5.5.1. More involved example</a></li>
+</ul>
+</li>
+<li><a href="#orgde7972a">5.6. Monadic style programming</a></li>
+<li><a href="#org4da8ffd">5.7. GADTs</a></li>
+<li><a href="#org75ce934">5.8. Death by GADTs</a></li>
+<li><a href="#org440fc7b">5.9. <code>Format</code>'ing text</a></li>
+<li><a href="#org9f8f447">5.10. Things that I did not talk about</a></li>
+</ul>
+</li>
+<li><a href="#orgc78600b">6. Conclusion</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org3f6c266" class="outline-2">
+<h2 id="org3f6c266"><span class="section-number-2">1</span> Preamble</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+This intro is partial ;-)
+</p>
+</div>
+</div>
+
+<div id="outline-container-org143a86a" class="outline-2">
+<h2 id="org143a86a"><span class="section-number-2">2</span> Introduction</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-orgf21c86e" class="outline-3">
+<h3 id="orgf21c86e"><span class="section-number-3">2.1</span> The <b>Categorical Abstract Machine Language</b></h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+OCaml is part of the ML family, like SML (big brother) or F# (little brother).
+</p>
+
+<dl class="org-dl">
+<dt>1973</dt><dd>ML
+Check that <a href="http://www.nuprl.org/software/eventml/KreitzandRahli-ClassicML.pdf">http://www.nuprl.org/software/eventml/KreitzandRahli-ClassicML.pdf</a></dd>
+<dt>1987-1992</dt><dd>Heavy CAML (LISP-based implementation)</dd>
+<dt>1990-1991</dt><dd>Caml Light</dd>
+<dt>1996</dt><dd>Objective Caml 1.00</dd>
+<dt>2011</dt><dd>Rebranding to OCaml (not O'Caml, not oCaml, <code>Just OCaml</code>)</dd>
+<dt>2019</dt><dd>OCaml 4.09</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-org347035f" class="outline-3">
+<h3 id="org347035f"><span class="section-number-3">2.2</span> OCaml : an open-minded functional language</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+It is <b>not</b> a purely functional language: imperative programming is part of
+the nominal toolbox, even OOP when it is the right fit.
+</p>
+
+<p>
+The standard lib has been kept voluntarily small.
+</p>
+
+<p>
+There have been various efforts to provide "batteries".
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org652b3f3" class="outline-3">
+<h3 id="org652b3f3"><span class="section-number-3">2.3</span> Bytecode and native code support</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+2 compilers for the price of one:
+</p>
+<ol class="org-ol">
+<li>a bytecode compiler (<code>ocamlc</code>) to a stack-based VM, and its interpreter <code>ocamlrun</code>
+works anywhere you have a C compiler</li>
+<li>a native code compiler (<code>ocamlopt</code>)
+<ul class="org-ul">
+<li>supports x86 (32/64), ARM (v5-v8), PowerPC(32/64) and &#x2026; SPARC !</li>
+<li>RISC-V not yet integrated but support exists</li>
+</ul></li>
+</ol>
+</div>
+</div>
+
+
+
+<div id="outline-container-org4748c79" class="outline-3">
+<h3 id="org4748c79"><span class="section-number-3">2.4</span> Users</h3>
+<div class="outline-text-3" id="text-2-4">
+<ul class="org-ul">
+<li>(Mostly French) academic circles
+<dl class="org-dl">
+<dt>academia</dt><dd>INRIA, CEA, CMU, UPenn, Berkeley, UArizona</dd>
+<dt>SMEs</dt><dd>OCamlPro/Origin Labs, Nomadic Labs, TrustInSoft, Tarides,</dd>
+</dl></li>
+<li>Financial "institutions" &#x2013; Jane Street, Bloomberg, SimCorp, Lexifi</li>
+<li>Facebook (ReasonML, Infer)</li>
+<li>Atos, AbsInt</li>
+<li>Indirectly Airbus (Astrée, Frama-C, Fluctuat), EDF</li>
+</ul>
+</div>
+
+
+<div id="outline-container-org0c44422" class="outline-4">
+<h4 id="org0c44422"><span class="section-number-4">2.4.1</span> Domains</h4>
+<div class="outline-text-4" id="text-2-4-1">
+<ul class="org-ul">
+<li>compilers</li>
+<li>program analysis</li>
+<li>theorem proving</li>
+<li>symbolic computations</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org755c389" class="outline-3">
+<h3 id="org755c389"><span class="section-number-3">2.5</span> Tooling (as of )</h3>
+<div class="outline-text-3" id="text-2-5">
+<dl class="org-dl">
+<dt>the <a href="https://github.com/ocaml/ocaml">compiler</a></dt><dd>last release is 4.09 (2019-09-18)</dd>
+<dt><a href="https://github.com/ocaml/merlin">merlin</a></dt><dd><p>
+context-sensitive completion for OCaml (in Vim &amp; Emacs)
+</p>
+
+<p>
+A <b>very</b> nice tool which has changed the life of most OCaml developers,
+and it's editor-agnostic !
+</p></dd>
+<dt><a href="https://github.com/ocaml/dune">dune</a></dt><dd><p>
+the newest contender in dedicated build systems
+</p>
+
+<p>
+May OCamlMakefile, omake, ocamlbuild rest in peace.
+</p></dd>
+
+<dt><a href="https://github.com/ocaml/opam">OPAM</a> (v1.0 in 2013)</dt><dd><p>
+current is 2.5 (2019-07-11)
+</p>
+
+<p>
+A source-based package manager for OCaml software.
+</p></dd>
+<dt>(no term)</dt><dd>Emacs</dd>
+</dl>
+
+
+<p>
+Check out
+</p>
+<ul class="org-ul">
+<li><a href="https://opam.ocaml.org/blog/turn-your-editor-into-an-ocaml-ide/">https://opam.ocaml.org/blog/turn-your-editor-into-an-ocaml-ide/</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-org96fc8aa" class="outline-2">
+<h2 id="org96fc8aa"><span class="section-number-2">3</span> Syntax Basics?</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org83f26b8" class="outline-3">
+<h3 id="org83f26b8"><span class="section-number-3">3.1</span> let-bindings</h3>
+<div class="outline-text-3" id="text-3-1">
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #34495e;">let</span> <span style="color: #9b59b6;">x</span> = <span style="color: #2492db; font-weight: bold;">Pervasives.</span>read_int <span style="color: #7f8c8d;">()</span> <span style="color: #34495e;">in</span>
+<span style="color: #34495e;">let</span> <span style="color: #9b59b6;">y</span> = <span style="color: #2492db; font-weight: bold;">Pervasives.</span>read_int <span style="color: #7f8c8d;">()</span> <span style="color: #34495e;">in</span>
+<span style="color: #2492db; font-weight: bold;">Pervasives.</span>print_int <span style="color: #7f8c8d;">(</span>x + y<span style="color: #7f8c8d;">)</span>;
+<span style="color: #2492db; font-weight: bold;">Pervasives.</span>print_newline <span style="color: #7f8c8d;">()</span>
+<span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6025530" class="outline-3">
+<h3 id="org6025530"><span class="section-number-3">3.2</span> Functions</h3>
+<div class="outline-text-3" id="text-3-2">
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">add</span> <span style="color: #9b59b6;">x</span> <span style="color: #9b59b6;">y</span> =
+  x + y
+<span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+
+<p>
+Since we are in a so-called functional languages, let's talk about functions.
+</p>
+
+<p>
+Functions are <b>curried</b> (unlike SML functions).
+</p>
+
+<p>
+That means <code>add x y</code> actually is <code>add(x)(y)</code> and <code>add</code> can be partially
+applied (or <code>add x</code>).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #34495e;">let</span> <span style="color: #9b59b6;">add1</span> = add 1 <span style="color: #ff4500;">;;</span>
+
+add1 2 <span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgef98252" class="outline-3">
+<h3 id="orgef98252"><span class="section-number-3">3.3</span> Recursivity</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+Recursive functions are explicitly qualified by the <b>rec</b> keyword.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #34495e;">let</span> <span style="color: #34495e;">rec</span> <span style="color: #8e44ad; font-weight: bold;">fact</span> <span style="color: #9b59b6;">n</span> =
+  <span style="color: #2980b9;">if</span> n &lt; 2 <span style="color: #2980b9;">then</span> 1 <span style="color: #2980b9;">else</span> n * fact <span style="color: #7f8c8d;">(</span>n - 1<span style="color: #7f8c8d;">)</span>
+<span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">let</span> <span style="color: #34495e;">rec</span> <span style="color: #8e44ad; font-weight: bold;">foldl</span> <span style="color: #9b59b6;">f</span> <span style="color: #9b59b6;">acc</span> = <span style="color: #2980b9;">function</span>
+  | <span style="color: #7f8c8d; background-color: #ffffff; font-weight: bold;">[]</span> -&gt; acc
+  | x <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">::</span> xs -&gt; foldl f <span style="color: #7f8c8d;">(</span>f acc x<span style="color: #7f8c8d;">)</span> xs
+<span style="color: #ff4500;">;;</span>
+
+foldl <span style="color: #7f8c8d;">(</span><span style="color: #8e44ad; font-weight: bold;">+</span><span style="color: #7f8c8d;">)</span> 0 <span style="color: #7f8c8d;">[</span>1;2;3;4<span style="color: #7f8c8d;">]</span> <span style="color: #ff4500;">;;</span> <span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">10 \o/ </span><span style="color: #95a5a6;">*)</span>
+</pre>
+</div>
+
+<p>
+Functions are not recursive by default.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">This second declaration hides the first.</span><span style="color: #95a5a6;">*)</span>
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">fact</span> <span style="color: #9b59b6;">n</span> = <span style="color: #2980b9;">assert</span> <span style="color: #7f8c8d;">(</span>n &gt;= 0<span style="color: #7f8c8d;">)</span>; fact n
+</pre>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-orga13fa79" class="outline-3">
+<h3 id="orga13fa79"><span class="section-number-3">3.4</span> Functions are first-class citizens</h3>
+<div class="outline-text-3" id="text-3-4">
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">[max cmp l] computes the maximun element of a list [l] provided a [cmp]</span>
+<span style="color: #95a5a6; font-style: italic;"> * function which is expected to conform to the following specification:</span>
+<span style="color: #95a5a6; font-style: italic;"> * - cmp x y = 0 if x is equivalent to y</span>
+<span style="color: #95a5a6; font-style: italic;"> * - cmp x y &gt; 0 if x is bigger than y</span>
+<span style="color: #95a5a6; font-style: italic;"> * - cmp x y &lt; 0 if x if smaller than y</span>
+<span style="color: #95a5a6; font-style: italic;"> </span><span style="color: #95a5a6;">*)</span>
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">max</span> <span style="color: #9b59b6;">cmp</span> <span style="color: #9b59b6;">l</span> =
+  <span style="color: #34495e;">let</span> <span style="color: #34495e;">rec</span> <span style="color: #8e44ad; font-weight: bold;">aux</span> <span style="color: #9b59b6;">cur_max</span> <span style="color: #9b59b6;">l</span> =
+    <span style="color: #2980b9;">match</span> l <span style="color: #2980b9;">with</span>
+    | <span style="color: #7f8c8d; background-color: #ffffff; font-weight: bold;">[]</span> -&gt; cur_max
+    | x <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">::</span> xs -&gt;
+       <span style="color: #34495e;">let</span> <span style="color: #9b59b6;">cur_max'</span> =
+         <span style="color: #2980b9;">match</span> cur_max <span style="color: #2980b9;">with</span>
+         | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">None</span> -&gt; <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Some</span> x
+         | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Some</span> vmax -&gt; <span style="color: #2980b9;">if</span> cmp x vmax &gt; 0 <span style="color: #2980b9;">then</span> <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Some</span> x <span style="color: #2980b9;">else</span> cur_max <span style="color: #34495e;">in</span>
+       aux cur_max' xs
+  <span style="color: #34495e;">in</span> aux <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">None</span> l
+<span style="color: #ff4500;">;;</span>
+
+max <span style="color: #2492db; font-weight: bold;">Pervasives.</span>compare <span style="color: #7f8c8d;">[</span>1; 2; 3;<span style="color: #7f8c8d;">]</span> <span style="color: #ff4500;">;;</span>
+
+<span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">Oopsie, we just rewrote the [Pervasives.max] function !</span><span style="color: #95a5a6;">*)</span>
+<span style="color: #2492db; font-weight: bold;">Pervasives.</span>max <span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc55955c" class="outline-3">
+<h3 id="orgc55955c"><span class="section-number-3">3.5</span> Evaluation is strict</h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+Like in most programming languages ;-)
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">double</span> <span style="color: #9b59b6;">x</span> = 2 * x <span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">dadd</span> <span style="color: #9b59b6;">x</span> <span style="color: #9b59b6;">y</span> =
+  <span style="color: #34495e;">let</span> <span style="color: #9b59b6;">x'</span> = double x
+  <span style="color: #34495e;">and</span> <span style="color: #9b59b6;">y'</span> = double y <span style="color: #34495e;">in</span>
+  <span style="color: #7f8c8d;">(</span> <span style="color: #8e44ad; font-weight: bold;">+</span> <span style="color: #7f8c8d;">)</span> x' y'
+  <span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">Infix operators are prefixed ones that are treated specially by the parser.</span>
+<span style="color: #95a5a6; font-style: italic;">     Have fun and create your owns. </span><span style="color: #95a5a6;">*)</span>
+ <span style="color: #ff4500;">;;</span>
+
+dadd <span style="color: #7f8c8d;">(</span>double 1<span style="color: #7f8c8d;">)</span> <span style="color: #7f8c8d;">(</span>double 2<span style="color: #7f8c8d;">)</span> <span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+
+<p>
+&#x2026; well except for binary Boolean operators &#x2013; of course ;-).
+</p>
+</div>
+
+<div id="outline-container-orge9b441b" class="outline-4">
+<h4 id="orge9b441b"><span class="section-number-4">3.5.1</span> Oddity</h4>
+<div class="outline-text-4" id="text-3-5-1">
+<p>
+Evaluation order for function arguments is <b>unspecified</b>.
+</p>
+
+<p>
+It is usually left-to-right, though.
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org78030d7" class="outline-3">
+<h3 id="org78030d7"><span class="section-number-3">3.6</span> Grouping information : Tuples</h3>
+<div class="outline-text-3" id="text-3-6">
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #34495e;">let</span> <span style="color: #9b59b6;">a</span> = 1, 2 <span style="color: #34495e;">in</span>
+<span style="color: #34495e;">let</span> <span style="color: #9b59b6;">x</span>, <span style="color: #9b59b6;">y</span> = a <span style="color: #34495e;">in</span>
+x + y
+<span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+
+<p>
+can also be written with <code>( .. )</code> as
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #34495e;">let</span> <span style="color: #9b59b6;">a</span> = <span style="color: #7f8c8d;">(</span>1, 2<span style="color: #7f8c8d;">)</span> <span style="color: #34495e;">in</span>
+<span style="color: #34495e;">let</span> <span style="color: #7f8c8d;">(</span><span style="color: #9b59b6;">x</span>, <span style="color: #9b59b6;">y</span><span style="color: #7f8c8d;">)</span> = a <span style="color: #34495e;">in</span>
+x + y
+<span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgce0ce60" class="outline-3">
+<h3 id="orgce0ce60"><span class="section-number-3">3.7</span> Everything is a pattern</h3>
+<div class="outline-text-3" id="text-3-7">
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #34495e;">type</span> <span style="color: #9b59b6;">point_3d</span> = float * float * float
+
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">create</span> <span style="color: #9b59b6;">x</span> <span style="color: #9b59b6;">y</span> <span style="color: #9b59b6;">z</span> = x, y, z <span style="color: #ff4500;">;;</span>
+
+<span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">Yes, FP arithmetic operations have a dedicated syntax </span><span style="color: #95a5a6;">*)</span>
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">square</span> <span style="color: #9b59b6;">a</span> = a *. a <span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">dist</span> <span style="color: #7f8c8d;">(</span><span style="color: #9b59b6;">x1</span>, <span style="color: #9b59b6;">y1</span>, <span style="color: #9b59b6;">z1</span><span style="color: #7f8c8d;">)</span> <span style="color: #9b59b6;">p</span> =
+  <span style="color: #34495e;">let</span> <span style="color: #9b59b6;">x2</span>, <span style="color: #9b59b6;">y2</span>, <span style="color: #9b59b6;">z2</span> = p <span style="color: #34495e;">in</span>
+  <span style="color: #34495e;">let</span> <span style="color: #9b59b6;">xdiff</span> = x2 -. x1
+  <span style="color: #34495e;">and</span> <span style="color: #9b59b6;">ydiff</span> = y2 -. y1
+  <span style="color: #34495e;">and</span> <span style="color: #9b59b6;">zdiff</span> = z2 -. z1 <span style="color: #34495e;">in</span>
+  square xdiff +. square ydiff +. square zdiff
+  <span style="color: #c0392b;">|&gt;</span> sqrt
+<span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">dist</span> <span style="color: #9b59b6;">p1</span> <span style="color: #9b59b6;">p2</span> =
+  <span style="color: #2980b9;">match</span> p1, p2 <span style="color: #2980b9;">with</span>
+  <span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">The | can also be used as a separator instead of as a starting</span>
+<span style="color: #95a5a6; font-style: italic;">     annotation. </span><span style="color: #95a5a6;">*)</span>
+  | <span style="color: #7f8c8d;">(</span>x1, y1, z1<span style="color: #7f8c8d;">)</span>, <span style="color: #7f8c8d;">(</span>x2, y2, z2<span style="color: #7f8c8d;">)</span> -&gt;
+     <span style="color: #34495e;">let</span> <span style="color: #9b59b6;">xdiff</span> = x2 -. x1
+     <span style="color: #34495e;">and</span> <span style="color: #9b59b6;">ydiff</span> = y2 -. y1
+     <span style="color: #34495e;">and</span> <span style="color: #9b59b6;">zdiff</span> = z2 -. z1 <span style="color: #34495e;">in</span>
+     sqrt <span style="color: #7f8c8d;">(</span>square xdiff +. square ydiff +. square zdiff<span style="color: #7f8c8d;">)</span>
+<span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2903d29" class="outline-3">
+<h3 id="org2903d29"><span class="section-number-3">3.8</span> Grouping information : Records (aka named tuples)</h3>
+<div class="outline-text-3" id="text-3-8">
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #34495e;">type</span> <span style="color: #9b59b6;">point_2d</span> = <span style="color: #7f8c8d;">{</span> x : float; y: float; <span style="color: #7f8c8d;">}</span>  <span style="color: #ff4500;">;;</span>
+
+<span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">C-like . notations for field access </span><span style="color: #95a5a6;">*)</span>
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">dist</span> <span style="color: #9b59b6;">p1</span> <span style="color: #9b59b6;">p2</span> =
+  <span style="color: #34495e;">let</span> <span style="color: #9b59b6;">xdiff</span> = p1.x -. p2.x
+  <span style="color: #34495e;">and</span> <span style="color: #9b59b6;">ydiff</span> = p1.y -. p2.y <span style="color: #34495e;">in</span>
+  sqrt <span style="color: #7f8c8d;">(</span>xdiff *. xdiff +. ydiff *. ydiff<span style="color: #7f8c8d;">)</span>
+<span style="color: #ff4500;">;;</span>
+
+<span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">Using pattern-matching </span><span style="color: #95a5a6;">*)</span>
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">dist2</span> <span style="color: #9b59b6;">p1</span> <span style="color: #9b59b6;">p2</span> =
+  <span style="color: #2980b9;">match</span> p1, p2 <span style="color: #2980b9;">with</span>
+  | <span style="color: #7f8c8d;">{</span> x; y; <span style="color: #7f8c8d;">}</span>, <span style="color: #7f8c8d;">{</span> x = x'; y = y';<span style="color: #7f8c8d;">}</span> -&gt;
+     <span style="color: #34495e;">let</span> <span style="color: #9b59b6;">xdiff</span> = x -. x'
+     <span style="color: #34495e;">and</span> <span style="color: #9b59b6;">ydiff</span> = y -. y' <span style="color: #34495e;">in</span>
+     sqrt <span style="color: #7f8c8d;">(</span>xdiff *. xdiff +. ydiff *. ydiff<span style="color: #7f8c8d;">)</span>
+<span style="color: #ff4500;">;;</span>
+
+<span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">Record can be built/destructed using a shortcut notation.</span>
+<span style="color: #95a5a6; font-style: italic;">   [let create x y = { x; y; }] is a shortcut for</span>
+<span style="color: #95a5a6; font-style: italic;">   [let create x y = { x = x; y = y; }].</span>
+
+<span style="color: #95a5a6; font-style: italic;">   Choose your field names wisely and unleash your inner procrastinator !</span>
+<span style="color: #95a5a6; font-style: italic;"> </span><span style="color: #95a5a6;">*)</span>
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">create</span> <span style="color: #9b59b6;">x</span> <span style="color: #9b59b6;">y</span> = <span style="color: #7f8c8d;">{</span> x; y; <span style="color: #7f8c8d;">}</span> <span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">of_int</span> <span style="color: #9b59b6;">myx</span> <span style="color: #9b59b6;">myy</span> = <span style="color: #7f8c8d;">{</span> x = float myx; y = float myy; <span style="color: #7f8c8d;">}</span> <span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+
+
+<blockquote>
+<p>
+Records are limited to 2<sup>22</sup> − 1 fields 
+</p>
+</blockquote>
+</div>
+</div>
+
+
+<div id="outline-container-org87c4894" class="outline-3">
+<h3 id="org87c4894"><span class="section-number-3">3.9</span> ADT &amp; pattern matching</h3>
+<div class="outline-text-3" id="text-3-9">
+<p>
+Exhaustive and fragile pattern matching are reported by default.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #34495e;">type</span> <span style="color: #9b59b6;">prop</span> =
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Cst</span> <span style="color: #2980b9;">of</span> bool
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Var</span> <span style="color: #2980b9;">of</span> string
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Band</span> <span style="color: #2980b9;">of</span> prop * prop
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Bor</span> <span style="color: #2980b9;">of</span> prop * prop
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Bnot</span> <span style="color: #2980b9;">of</span> prop
+<span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">let</span> <span style="color: #9b59b6;">free_variables</span> =
+<span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">The pattern matching here is well-typeg but not exhaustive </span><span style="color: #95a5a6;">*)</span>
+  <span style="color: #34495e;">let</span> <span style="color: #34495e;">rec</span> <span style="color: #8e44ad; font-weight: bold;">loop</span> <span style="color: #9b59b6;">vars</span> =
+    | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Var</span> s -&gt; <span style="color: #2980b9;">if</span> <span style="color: #2492db; font-weight: bold;">List.</span>mem s vars <span style="color: #2980b9;">then</span> vars <span style="color: #2980b9;">else</span> s <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">::</span> vars
+    | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Band</span> <span style="color: #7f8c8d;">(</span>p1, p2<span style="color: #7f8c8d;">)</span> -&gt;
+       <span style="color: #34495e;">let</span> <span style="color: #9b59b6;">vars'</span> = loop vars p1 <span style="color: #34495e;">in</span>
+       loop vars' p2
+  <span style="color: #34495e;">in</span> loop <span style="color: #7f8c8d; background-color: #ffffff; font-weight: bold;">[]</span>
+<span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">let</span> <span style="color: #9b59b6;">free_variables</span> =
+  <span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">Now it is exhaustive, but ... fragile </span><span style="color: #95a5a6;">*)</span>
+  <span style="color: #34495e;">let</span> <span style="color: #34495e;">rec</span> <span style="color: #8e44ad; font-weight: bold;">loop</span> <span style="color: #9b59b6;">vars</span> =
+    | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Var</span> s -&gt; <span style="color: #2980b9;">if</span> <span style="color: #2492db; font-weight: bold;">List.</span>mem s vars <span style="color: #2980b9;">then</span> vars <span style="color: #2980b9;">else</span> s <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">::</span> vars
+    | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Band</span> <span style="color: #7f8c8d;">(</span>p1, p2<span style="color: #7f8c8d;">)</span> -&gt;
+       <span style="color: #34495e;">let</span> <span style="color: #9b59b6;">vars'</span> = loop vars p1 <span style="color: #34495e;">in</span>
+       loop vars' p2
+    | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Bor</span> <span style="color: #7f8c8d;">(</span>p1, p2<span style="color: #7f8c8d;">)</span> -&gt;
+       <span style="color: #34495e;">let</span> <span style="color: #9b59b6;">vars'</span> = loop vars p1 <span style="color: #34495e;">in</span>
+       loop vars' p2
+    | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Bnot</span> p -&gt; loop vars p
+    | _ -&gt; vars <span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">fragile pattern-matching if a constructor is added, it is</span>
+<span style="color: #95a5a6; font-style: italic;">                   matched here </span><span style="color: #95a5a6;">*)</span>
+  <span style="color: #34495e;">in</span> loop <span style="color: #7f8c8d; background-color: #ffffff; font-weight: bold;">[]</span>
+<span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+
+<p>
+The compact solution for this function includes or-patterns.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #34495e;">let</span> <span style="color: #9b59b6;">free_variables</span> =
+  <span style="color: #34495e;">let</span> <span style="color: #34495e;">rec</span> <span style="color: #8e44ad; font-weight: bold;">loop</span> <span style="color: #9b59b6;">vars</span> = <span style="color: #2980b9;">function</span>
+    | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Var</span> s -&gt; <span style="color: #2980b9;">if</span> <span style="color: #2492db; font-weight: bold;">List.</span>mem s vars <span style="color: #2980b9;">then</span> vars <span style="color: #2980b9;">else</span> s <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">::</span> vars
+    | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Band</span> <span style="color: #7f8c8d;">(</span>p1, p2<span style="color: #7f8c8d;">)</span>
+    | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Bor</span> <span style="color: #7f8c8d;">(</span>p1, p2<span style="color: #7f8c8d;">)</span> -&gt; <span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">'or' pattern </span><span style="color: #95a5a6;">*)</span>
+       <span style="color: #34495e;">let</span> <span style="color: #9b59b6;">vars'</span> = loop vars p1 <span style="color: #34495e;">in</span>
+       loop vars' p2
+    | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Bnot</span> p -&gt; loop vars p
+    | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Cst</span> _ -&gt; vars <span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">non-fragile pattern-matching </span><span style="color: #95a5a6;">*)</span>
+    <span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">When I later add the [Bxor] constructor, the</span>
+<span style="color: #95a5a6; font-style: italic;">     * compiler will show me where pattern-matching is not exhaustive.</span>
+<span style="color: #95a5a6; font-style: italic;">     </span><span style="color: #95a5a6;">*)</span>
+  <span style="color: #34495e;">in</span> loop <span style="color: #7f8c8d; background-color: #ffffff; font-weight: bold;">[]</span>
+<span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+
+
+<p>
+For (way) more:
+</p>
+<ul class="org-ul">
+<li><a href="https://dl.acm.org/doi/10.1145/507669.507641">https://dl.acm.org/doi/10.1145/507669.507641</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org7648ceb" class="outline-3">
+<h3 id="org7648ceb"><span class="section-number-3">3.10</span> Labels (aka named arguments)</h3>
+<div class="outline-text-3" id="text-3-10">
+<p>
+Named arguments are mainly used for 2 reasons:
+</p>
+<ul class="org-ul">
+<li><p>
+name-based disambiguation of same type parameters
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #34495e;">type</span> <span style="color: #9b59b6;">interval</span> = <span style="color: #7f8c8d;">{</span> lo : int; hi : int <span style="color: #7f8c8d;">}</span> <span style="color: #ff4500;">;;</span>
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">create</span> ~<span style="color: #9b59b6;">lo</span> ~<span style="color: #9b59b6;">hi</span> = <span style="color: #7f8c8d;">{</span> lo; hi; <span style="color: #7f8c8d;">}</span>
+</pre>
+</div></li>
+
+<li><p>
+homogeneous naming betting on programmers' procrastination
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">Which version would you rather write? </span><span style="color: #95a5a6;">*)</span>
+
+<span style="color: #34495e;">let</span> <span style="color: #9b59b6;">lo</span> = 12 <span style="color: #34495e;">and</span> <span style="color: #9b59b6;">hi</span> = 15 <span style="color: #34495e;">in</span> create ~lo ~hi  <span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">let</span> <span style="color: #9b59b6;">lbd</span> = 12 <span style="color: #34495e;">and</span> <span style="color: #9b59b6;">ubd</span> = 15 <span style="color: #34495e;">in</span> create <span style="color: #0a74b9;">~lo</span>:lbd <span style="color: #0a74b9;">~hi</span>:ubd <span style="color: #ff4500;">;;</span>
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+
+
+
+
+
+<div id="outline-container-org7f91c0f" class="outline-3">
+<h3 id="org7f91c0f"><span class="section-number-3">3.11</span> Optional arguments</h3>
+<div class="outline-text-3" id="text-3-11">
+<p>
+A special case of named arguments is optional arguments
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #34495e;">type</span> <span style="color: #9b59b6;">interval</span> = <span style="color: #7f8c8d;">{</span> lo : int; hi : int <span style="color: #7f8c8d;">}</span> <span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">create</span> ?<span style="color: #7f8c8d;">(</span><span style="color: #9b59b6;">lo</span>=0<span style="color: #7f8c8d;">)</span> <span style="color: #9b59b6;">hi</span> = <span style="color: #7f8c8d;">{</span> lo; hi; <span style="color: #7f8c8d;">}</span> <span style="color: #ff4500;">;;</span>
+
+create 2<span style="color: #ff4500;">;;</span>
+
+
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">create</span> ?<span style="color: #7f8c8d;">(</span><span style="color: #9b59b6;">lo</span>=0<span style="color: #7f8c8d;">)</span> ~<span style="color: #9b59b6;">hi</span> <span style="color: #7f8c8d;">()</span> = <span style="color: #7f8c8d;">{</span> lo; hi; <span style="color: #7f8c8d;">}</span> <span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">let</span> <span style="color: #9b59b6;">ival</span> = create <span style="color: #0a74b9;">~hi</span>:2 <span style="color: #7f8c8d;">()</span><span style="color: #ff4500;">;;</span>
+
+
+<span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">The use of partial arguments complicate a little bit closure computations.</span><span style="color: #95a5a6;">*)</span>
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">pp_ival</span> ?<span style="color: #7f8c8d;">(</span><span style="color: #9b59b6;">pre</span>=<span style="color: #27ae60;">"("</span><span style="color: #7f8c8d;">)</span> ?<span style="color: #7f8c8d;">(</span><span style="color: #9b59b6;">post</span>=<span style="color: #27ae60;">")"</span><span style="color: #7f8c8d;">)</span> ?<span style="color: #7f8c8d;">(</span><span style="color: #9b59b6;">sep</span>=<span style="color: #27ae60;">","</span><span style="color: #7f8c8d;">)</span><span style="color: #9b59b6;">ppf</span> <span style="color: #7f8c8d;">{</span> <span style="color: #9b59b6;">lo</span>; <span style="color: #9b59b6;">hi</span>; <span style="color: #7f8c8d;">}</span> =
+  <span style="color: #2492db; font-weight: bold;">Format.</span>fprintf ppf <span style="color: #27ae60;">"@[&lt;h&gt;%s%d%s%d%s@]"</span> pre lo sep hi post
+<span style="color: #ff4500;">;;</span>
+
+<span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">The following does not type </span><span style="color: #95a5a6;">*)</span>
+<span style="color: #2492db; font-weight: bold;">Format.</span>printf <span style="color: #27ae60;">"%a@."</span> pp_ival ival <span style="color: #ff4500;">;;</span>
+
+<span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">You need to create another function </span><span style="color: #95a5a6;">*)</span>
+<span style="color: #2492db; font-weight: bold;">Format.</span>printf <span style="color: #27ae60;">"%a@."</span> <span style="color: #7f8c8d;">(</span><span style="color: #2980b9;">fun</span> <span style="color: #9b59b6;">ppf</span> <span style="color: #9b59b6;">ival</span> -&gt; pp_ival ppf ival<span style="color: #7f8c8d;">)</span> ival <span style="color: #ff4500;">;;</span>
+
+<span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">The following does work though </span><span style="color: #95a5a6;">*)</span>
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">pp_ival2</span> <span style="color: #9b59b6;">ppf</span> = pp_ival ppf <span style="color: #ff4500;">;;</span>
+<span style="color: #2492db; font-weight: bold;">Format.</span>printf <span style="color: #27ae60;">"%a@."</span> pp_ival2 ival <span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org523f758" class="outline-3">
+<h3 id="org523f758"><span class="section-number-3">3.12</span> Optional arguments <b>are</b> option types</h3>
+<div class="outline-text-3" id="text-3-12">
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #34495e;">type</span> <span style="color: #7f8c8d;">(</span><span style="color: #9b59b6;">'a, 'b</span><span style="color: #7f8c8d;">)</span><span style="color: #9b59b6;"> return</span> = <span style="color: #7f8c8d;">{</span>
+    value : 'a;
+    explanation : 'b option;
+  <span style="color: #7f8c8d;">}</span>
+<span style="color: #ff4500;">;;</span>
+
+<span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">Optional arguments of a type ['a] are really ['a option] types and ce be</span>
+<span style="color: #95a5a6; font-style: italic;"> * used that way in the body of the function </span><span style="color: #95a5a6;">*)</span>
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">create_return_value</span> ?<span style="color: #9b59b6;">explanation</span> <span style="color: #9b59b6;">value</span> =
+  <span style="color: #7f8c8d;">{</span> value; explanation; <span style="color: #7f8c8d;">}</span>
+<span style="color: #ff4500;">;;</span>
+
+<span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">Now if you have a default value [v], [Some v] needs to be used. </span><span style="color: #95a5a6;">*)</span>
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">create_defaulted_return_value</span> ?<span style="color: #7f8c8d;">(</span><span style="color: #9b59b6;">explanation</span>=<span style="color: #27ae60;">"message"</span><span style="color: #7f8c8d;">)</span> <span style="color: #9b59b6;">value</span> =
+  <span style="color: #7f8c8d;">{</span> value; explanation = <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Some</span> explanation; <span style="color: #7f8c8d;">}</span>
+<span style="color: #ff4500;">;;</span>
+
+<span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">The construction below does not type. </span><span style="color: #95a5a6;">*)</span>
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">create_defaulted_return_value</span> ?<span style="color: #7f8c8d;">(</span><span style="color: #9b59b6;">explanation</span>=<span style="color: #27ae60;">"message"</span><span style="color: #7f8c8d;">)</span> <span style="color: #9b59b6;">value</span> =
+  <span style="color: #7f8c8d;">{</span> value; explanation; <span style="color: #7f8c8d;">}</span>
+<span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgef60771" class="outline-3">
+<h3 id="orgef60771"><span class="section-number-3">3.13</span> Using named arguments in practice</h3>
+<div class="outline-text-3" id="text-3-13">
+<p>
+A commonly used recipe to construct functions with named arguments is:
+</p>
+<ol class="org-ol">
+<li>Put your optional arguments</li>
+<li>Put your named arguments</li>
+<li>Put the rest of your arguments</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org7bcfac5" class="outline-3">
+<h3 id="org7bcfac5"><span class="section-number-3">3.14</span> Nice to have: type-directed record disambiguation</h3>
+<div class="outline-text-3" id="text-3-14">
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #34495e;">type</span> <span style="color: #9b59b6;">t</span> = <span style="color: #7f8c8d;">{</span> x : float; y : int; <span style="color: #7f8c8d;">}</span> <span style="color: #ff4500;">;;</span>
+
+<span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">Shadowing x and y </span><span style="color: #95a5a6;">*)</span>
+<span style="color: #34495e;">type</span> <span style="color: #9b59b6;">t'</span> = <span style="color: #7f8c8d;">{</span> x : int; y : float; <span style="color: #7f8c8d;">}</span> <span style="color: #ff4500;">;;</span>
+
+
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">addall</span> <span style="color: #7f8c8d;">(</span><span style="color: #9b59b6;">v1</span>:<span style="color: #9b59b6;">t</span><span style="color: #7f8c8d;">)</span> <span style="color: #9b59b6;">v2</span> =
+  <span style="color: #34495e;">let</span> <span style="color: #9b59b6;">xsum</span> = truncate v1.x + v2.x <span style="color: #34495e;">in</span>
+  <span style="color: #34495e;">let</span> <span style="color: #9b59b6;">ysum</span> = v1.y + truncate v2.y <span style="color: #34495e;">in</span>
+  xsum + ysum
+<span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+
+<p>
+Check out:
+</p>
+<ol class="org-ol">
+<li><a href="http://gallium.inria.fr/~scherer/gagallium/resolving-field-names/">http://gallium.inria.fr/~scherer/gagallium/resolving-field-names/</a></li>
+<li><a href="http://gallium.inria.fr/~scherer/gagallium/resolving-field-names-2/">http://gallium.inria.fr/~scherer/gagallium/resolving-field-names-2/</a></li>
+</ol>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-org828c72d" class="outline-2">
+<h2 id="org828c72d"><span class="section-number-2">4</span> Imperative programming</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-org9df8fb3" class="outline-3">
+<h3 id="org9df8fb3"><span class="section-number-3">4.1</span> It's ok to be impure</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+A bunch of OCaml primitive constructs are imperative.
+</p>
+
+<ul class="org-ul">
+<li>ref</li>
+<li>mutable field in records</li>
+<li>arrays</li>
+<li>hashtables</li>
+<li>bytes (aka strings before 4.02)</li>
+<li>stacks, queues, &#x2026;.</li>
+</ul>
+
+<p>
+No need to read Okasaki's book to understand their implementation ;-)
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgfb45f96" class="outline-3">
+<h3 id="orgfb45f96"><span class="section-number-3">4.2</span> The unit type</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+The type of sequence elements (think 'statement') is <code>unit</code>, which is
+inhabited by a single value <code>()</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">fact</span> <span style="color: #9b59b6;">n</span> =
+  <span style="color: #34495e;">let</span> <span style="color: #9b59b6;">res</span> = <span style="color: #34495e;">ref</span> 1 <span style="color: #34495e;">in</span>
+  <span style="color: #2980b9;">for</span> j = 2 <span style="color: #2980b9;">to</span> n <span style="color: #2980b9;">do</span>
+    res := <span style="color: #c0392b;">!</span>res * j; <span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">this assignment has type unit </span><span style="color: #95a5a6;">*)</span>
+  <span style="color: #2980b9;">done</span>;
+  <span style="color: #c0392b;">!</span>res
+<span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcd0dcf2" class="outline-3">
+<h3 id="orgcd0dcf2"><span class="section-number-3">4.3</span> Trivia :: What's in a reference?</h3>
+<div class="outline-text-3" id="text-4-3">
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #34495e;">let</span> <span style="color: #9b59b6;">x</span> = <span style="color: #34495e;">ref</span> 1 <span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">let</span> <span style="color: #9b59b6;">y</span> = <span style="color: #7f8c8d;">{</span> contents = 12 <span style="color: #7f8c8d;">}</span> <span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">type</span> <span style="color: #9b59b6;">'a ref</span> = <span style="color: #7f8c8d;">{</span> <span style="color: #2980b9;">mutable</span> contents : 'a <span style="color: #7f8c8d;">}</span><span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3064d76" class="outline-3">
+<h3 id="org3064d76"><span class="section-number-3">4.4</span> Typical OCaml code</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+Typical code mixes and matches functional and imperative features, usually
+for efficiency reasons. You will not be castigated for doing so.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">Assuming I use a list-based representation for sets, it is very idiomatic</span>
+<span style="color: #95a5a6; font-style: italic;"> * way to write the code below </span><span style="color: #95a5a6;">*)</span>
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">cardinal</span> <span style="color: #9b59b6;">l</span> =
+  <span style="color: #34495e;">let</span> <span style="color: #9b59b6;">h</span> = <span style="color: #2492db; font-weight: bold;">Hashtbl.</span>create 7 <span style="color: #34495e;">in</span>
+  <span style="color: #34495e;">let</span> <span style="color: #34495e;">rec</span> <span style="color: #8e44ad; font-weight: bold;">loop</span> = <span style="color: #2980b9;">function</span>
+    | x <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">::</span> xs -&gt;
+       <span style="color: #2492db; font-weight: bold;">Hashtbl.</span>add h x <span style="color: #7f8c8d;">()</span>; <span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">Hashtbl.replace may be better here </span><span style="color: #95a5a6;">*)</span>
+       loop xs
+    | <span style="color: #7f8c8d; background-color: #ffffff; font-weight: bold;">[]</span> -&gt;
+       <span style="color: #2492db; font-weight: bold;">Hashtbl.</span>length h
+  <span style="color: #34495e;">in</span> loop l
+<span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">Concatenating the elements of a string list </span><span style="color: #95a5a6;">*)</span>
+<span style="color: #34495e;">let</span> <span style="color: #9b59b6;">concat</span> =
+  <span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">An OCaml [Buffer.t] is similar to a Java [StringBuffer].</span>
+<span style="color: #95a5a6; font-style: italic;">   * It is a self-growing array bytes.</span>
+<span style="color: #95a5a6; font-style: italic;">   </span><span style="color: #95a5a6;">*)</span>
+  <span style="color: #34495e;">let</span> <span style="color: #9b59b6;">b</span> = <span style="color: #2492db; font-weight: bold;">Buffer.</span>create 1024 <span style="color: #34495e;">in</span>
+  <span style="color: #2980b9;">fun</span> ~<span style="color: #9b59b6;">sep</span> <span style="color: #9b59b6;">l</span> -&gt;
+  <span style="color: #2492db; font-weight: bold;">Buffer.</span>reset b;    <span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">cleanup any previously written contents </span><span style="color: #95a5a6;">*)</span>
+  <span style="color: #2492db; font-weight: bold;">List.</span>iter
+  <span style="color: #7f8c8d;">(</span><span style="color: #2980b9;">fun</span> <span style="color: #9b59b6;">s</span> -&gt; <span style="color: #2492db; font-weight: bold;">Buffer.</span>add_string b s;
+            <span style="color: #2492db; font-weight: bold;">Buffer.</span>add_string b sep;<span style="color: #7f8c8d;">)</span>
+  l;
+  <span style="color: #2492db; font-weight: bold;">Buffer.</span>contents b
+<span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgb0dc906" class="outline-3">
+<h3 id="orgb0dc906"><span class="section-number-3">4.5</span> Trivia :: Hashtables</h3>
+<div class="outline-text-3" id="text-4-5">
+<p>
+Hashtables have an interesting property : <code>add</code> does not remove old values!
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #34495e;">let</span> <span style="color: #9b59b6;">h</span> = <span style="color: #2492db; font-weight: bold;">Hashtbl.</span>create 7 <span style="color: #ff4500;">;;</span>
+<span style="color: #2492db; font-weight: bold;">Hashtbl.</span>add h 1 2 <span style="color: #ff4500;">;;</span>
+<span style="color: #2492db; font-weight: bold;">Hashtbl.</span>add h 1 3 <span style="color: #ff4500;">;;</span>
+<span style="color: #2492db; font-weight: bold;">Hashtbl.</span>iter <span style="color: #7f8c8d;">(</span><span style="color: #2980b9;">fun</span> <span style="color: #9b59b6;">k</span> <span style="color: #9b59b6;">v</span> -&gt; <span style="color: #2492db; font-weight: bold;">Format.</span>printf <span style="color: #27ae60;">"%d -&gt; %d@."</span> k v<span style="color: #7f8c8d;">)</span> h <span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf8a3b8f" class="outline-3">
+<h3 id="orgf8a3b8f"><span class="section-number-3">4.6</span> Pitfall(s)</h3>
+<div class="outline-text-3" id="text-4-6">
+<p>
+The use of <code>;</code> leads to some pitfalls for the beginner (and the guru not
+paying enough attention).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">This is syntactilly incorrect </span><span style="color: #95a5a6;">*)</span>
+<span style="color: #34495e;">let</span> <span style="color: #9b59b6;">test_and_print</span> =
+  <span style="color: #34495e;">let</span> <span style="color: #9b59b6;">count_success</span> = <span style="color: #34495e;">ref</span> 0 <span style="color: #34495e;">in</span>
+  <span style="color: #2980b9;">fun</span> <span style="color: #9b59b6;">secret</span> -&gt;
+  <span style="color: #2980b9;">if</span> secret = <span style="color: #27ae60;">"you will never guess that"</span> <span style="color: #2980b9;">then</span>
+    incr count_success;
+    <span style="color: #2492db; font-weight: bold;">Format.</span>printf <span style="color: #27ae60;">"Success"</span>
+  <span style="color: #2980b9;">else</span> <span style="color: #2492db; font-weight: bold;">Format.</span>printf <span style="color: #27ae60;">"Failure"</span>
+<span style="color: #ff4500;">;;</span>
+
+<span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">This is </span><span style="color: #95a5a6;">*)</span>
+<span style="color: #34495e;">let</span> <span style="color: #9b59b6;">test_and_print</span> =
+  <span style="color: #34495e;">let</span> <span style="color: #9b59b6;">count_success</span> = <span style="color: #34495e;">ref</span> 0 <span style="color: #34495e;">in</span>
+  <span style="color: #2980b9;">fun</span> <span style="color: #9b59b6;">secret</span> -&gt;
+  <span style="color: #2980b9;">if</span> secret = <span style="color: #27ae60;">"you will never guess that"</span> <span style="color: #2980b9;">then</span> <span style="color: #34495e;">begin</span>
+      incr count_success;
+      <span style="color: #2492db; font-weight: bold;">Format.</span>printf <span style="color: #27ae60;">"Success"</span>
+    <span style="color: #34495e;">end</span>
+  <span style="color: #2980b9;">else</span> <span style="color: #2492db; font-weight: bold;">Format.</span>printf <span style="color: #27ae60;">"Failure"</span>
+<span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org81ed13e" class="outline-3">
+<h3 id="org81ed13e"><span class="section-number-3">4.7</span> Exceptions</h3>
+<div class="outline-text-3" id="text-4-7">
+<p>
+Exceptions are open algebraic data types with a dedicated construct <code>exception</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #2980b9;">exception</span> <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Empty_list</span> <span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">nth</span> <span style="color: #9b59b6;">i</span> <span style="color: #9b59b6;">l</span> =
+  <span style="color: #2980b9;">assert</span> <span style="color: #7f8c8d;">(</span>i &gt;= 0<span style="color: #7f8c8d;">)</span>;
+  <span style="color: #34495e;">let</span> <span style="color: #34495e;">rec</span> <span style="color: #8e44ad; font-weight: bold;">aux</span> <span style="color: #9b59b6;">j</span> = <span style="color: #2980b9;">function</span>
+    | <span style="color: #7f8c8d; background-color: #ffffff; font-weight: bold;">[]</span> -&gt;
+       <span style="color: #34495e;">raise</span> <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Empty_list</span>
+    | x <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">::</span> xs -&gt;
+       <span style="color: #2980b9;">if</span> j = 0 <span style="color: #2980b9;">then</span> x
+       <span style="color: #2980b9;">else</span> aux <span style="color: #7f8c8d;">(</span>j - 1<span style="color: #7f8c8d;">)</span> xs
+  <span style="color: #34495e;">in</span> aux i l
+<span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgf57dc0e" class="outline-3">
+<h3 id="orgf57dc0e"><span class="section-number-3">4.8</span> Local exceptions &amp; pattern-matching mixed exceptions/values</h3>
+<div class="outline-text-3" id="text-4-8">
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">find</span> <span style="color: #7f8c8d;">(</span><span style="color: #2980b9;">type</span> <span style="color: #9b59b6;">a</span><span style="color: #7f8c8d;">)</span> <span style="color: #7f8c8d;">(</span><span style="color: #9b59b6;">p</span>:<span style="color: #9b59b6;">a -&gt; bool</span><span style="color: #7f8c8d;">)</span> <span style="color: #7f8c8d;">(</span><span style="color: #9b59b6;">arr</span>:<span style="color: #9b59b6;">a array</span><span style="color: #7f8c8d;">)</span> =
+  <span style="color: #34495e;">let exception</span> <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Found</span> <span style="color: #2980b9;">of</span> a <span style="color: #34495e;">in</span>
+  <span style="color: #2980b9;">match</span> <span style="color: #2492db; font-weight: bold;">Array.</span>iter <span style="color: #7f8c8d;">(</span><span style="color: #2980b9;">fun</span> <span style="color: #9b59b6;">e</span> -&gt; <span style="color: #2980b9;">if</span> p e <span style="color: #2980b9;">then</span> <span style="color: #34495e;">raise</span> <span style="color: #2c3e50;">(</span><span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Found</span> e<span style="color: #2c3e50;">)</span><span style="color: #7f8c8d;">)</span> arr <span style="color: #2980b9;">with</span>
+  | <span style="color: #7f8c8d;">()</span> -&gt; <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">None</span>
+  | <span style="color: #2980b9;">exception</span> <span style="color: #7f8c8d;">(</span><span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Found</span> elt<span style="color: #7f8c8d;">)</span> -&gt; <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Some</span> elt
+<span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org989d892" class="outline-2">
+<h2 id="org989d892"><span class="section-number-2">5</span> More advanced topics</h2>
+<div class="outline-text-2" id="text-5">
+</div>
+<div id="outline-container-orgfe1f83b" class="outline-3">
+<h3 id="orgfe1f83b"><span class="section-number-3">5.1</span> What's a module?</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+The moment you have 2 files, you will be manipulating <b>modules</b>.
+</p>
+
+<p>
+A module is an abstraction barrier to used to bundle together related
+definitions and functionalities.
+</p>
+
+<p>
+A file defines a module: Both files <code>File</code> and <code>file</code> define module <code>File</code>
+(thank you case-insensitive world).
+</p>
+
+<p>
+Inside a module, one can define other modules.
+</p>
+
+<p>
+Modules can be recursive.
+</p>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgca9927b" class="outline-3">
+<h3 id="orgca9927b"><span class="section-number-3">5.2</span> Interface &amp; implementation :: <code>mli</code> &amp; <code>ml</code></h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+<code>OCaml</code> programmers are encouraged to detach API interface (documentation,
+typing, &#x2026;) from their implementation.
+</p>
+
+<p>
+The usage is to <b>not</b> type every and all functions coded, only the ones that
+are exported and those whose type cannot be correctly inferred.
+</p>
+
+<p>
+So for a given file-based module
+</p>
+<ul class="org-ul">
+<li><code>mli</code> files contain interfaces (aka type signatures)</li>
+<li><p>
+<code>ml</code>  files contain implementations
+</p>
+
+<p>
+For "programmatic" modules, you will use <code>module type</code> to abstract
+functionalities/traits and <code>module</code> for implementing said modules.
+</p></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org93be030" class="outline-3">
+<h3 id="org93be030"><span class="section-number-3">5.3</span> Levels of type abstraction</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+Modules help to delimit abstraction barriers
+</p>
+</div>
+
+<div id="outline-container-org63e96b8" class="outline-4">
+<h4 id="org63e96b8"><span class="section-number-4">5.3.1</span> Open</h4>
+<div class="outline-text-4" id="text-5-3-1">
+<p>
+Open types can be directly constructed &amp; destructed
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #34495e;">module</span> <span style="color: #2492db; font-weight: bold;">Interval</span> = <span style="color: #34495e;">struct</span>
+  <span style="color: #34495e;">type</span> <span style="color: #9b59b6;">t</span> =
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Ival</span> <span style="color: #2980b9;">of</span> <span style="color: #7f8c8d;">{</span> lo : int; hi : int; <span style="color: #7f8c8d;">}</span>
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Top</span>
+  <span style="color: #ff4500;">;;</span>
+
+  <span style="color: #34495e;">let</span> <span style="color: #9b59b6;">top</span> = <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Top</span> <span style="color: #ff4500;">;;</span>
+
+  <span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">ival</span> ~<span style="color: #9b59b6;">lo</span> ~<span style="color: #9b59b6;">hi</span> =
+    <span style="color: #2980b9;">assert</span> <span style="color: #7f8c8d;">(</span>lo &lt;= hi<span style="color: #7f8c8d;">)</span>;
+    <span style="color: #2980b9;">if</span> lo = min_int <span style="color: #c0392b;">&amp;&amp;</span> hi = max_int <span style="color: #2980b9;">then</span> top
+    <span style="color: #2980b9;">else</span> <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Ival</span> <span style="color: #7f8c8d;">{</span>lo; hi;<span style="color: #7f8c8d;">}</span>
+  <span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">end</span>
+<span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">open </span><span style="color: #2492db; font-weight: bold;">Interval</span>
+
+<span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">Pattern-matching is ok </span><span style="color: #95a5a6;">*)</span>
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">size</span> = <span style="color: #2980b9;">function</span>
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Ival</span> <span style="color: #7f8c8d;">{</span>lo; hi; <span style="color: #7f8c8d;">}</span> -&gt; float <span style="color: #c0392b;">@@</span> hi - lo + 1
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Top</span> -&gt; infinity
+<span style="color: #ff4500;">;;</span>
+
+<span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">This is authorized. </span><span style="color: #95a5a6;">*)</span>
+<span style="color: #34495e;">let</span> <span style="color: #9b59b6;">interval</span> = <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Top</span> <span style="color: #ff4500;">;;</span>
+
+<span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">This is for the [top] function is part of the module signatures. </span><span style="color: #95a5a6;">*)</span>
+<span style="color: #34495e;">let</span> <span style="color: #9b59b6;">top2</span> = top <span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org14a0c5f" class="outline-4">
+<h4 id="org14a0c5f"><span class="section-number-4">5.3.2</span> private</h4>
+<div class="outline-text-4" id="text-5-3-2">
+<p>
+Private types can be constructed only by predefined functions, destructed by
+usual pattern matching.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #34495e;">module</span> <span style="color: #2492db; font-weight: bold;">Interval</span> : <span style="color: #34495e;">sig</span>
+  <span style="color: #34495e;">type</span> <span style="color: #9b59b6;">t</span> = <span style="color: #2980b9;">private</span>
+    | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Ival</span> <span style="color: #2980b9;">of</span> <span style="color: #7f8c8d;">{</span> lo : int; hi: int;<span style="color: #7f8c8d;">}</span>
+    | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Top</span>
+  <span style="color: #ff4500;">;;</span>
+
+  <span style="color: #34495e;">val</span> <span style="color: #8e44ad; font-weight: bold;">ival</span> : <span style="color: #0a74b9;">lo</span>:int -&gt; <span style="color: #0a74b9;">hi</span>:int -&gt; t <span style="color: #ff4500;">;;</span>
+  <span style="color: #34495e;">val</span> <span style="color: #8e44ad; font-weight: bold;">top</span> : t
+<span style="color: #34495e;">end</span> = <span style="color: #34495e;">struct</span>
+  <span style="color: #34495e;">type</span> <span style="color: #9b59b6;">t</span> =
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Ival</span> <span style="color: #2980b9;">of</span> <span style="color: #7f8c8d;">{</span> lo : int; hi : int; <span style="color: #7f8c8d;">}</span>
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Top</span>
+  <span style="color: #ff4500;">;;</span>
+
+  <span style="color: #34495e;">let</span> <span style="color: #9b59b6;">top</span> = <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Top</span> <span style="color: #ff4500;">;;</span>
+
+  <span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">ival</span> ~<span style="color: #9b59b6;">lo</span> ~<span style="color: #9b59b6;">hi</span> =
+    <span style="color: #2980b9;">assert</span> <span style="color: #7f8c8d;">(</span>lo &lt;= hi<span style="color: #7f8c8d;">)</span>;
+    <span style="color: #2980b9;">if</span> lo = min_int <span style="color: #c0392b;">&amp;&amp;</span> hi = max_int <span style="color: #2980b9;">then</span> top
+    <span style="color: #2980b9;">else</span> <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Ival</span> <span style="color: #7f8c8d;">{</span>lo; hi;<span style="color: #7f8c8d;">}</span>
+  <span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">end</span>
+<span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">open </span><span style="color: #2492db; font-weight: bold;">Interval</span>
+
+<span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">Pattern-matching is ok on private type </span><span style="color: #95a5a6;">*)</span>
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">size</span> = <span style="color: #2980b9;">function</span>
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Ival</span> <span style="color: #7f8c8d;">{</span>lo; hi; <span style="color: #7f8c8d;">}</span> -&gt; float <span style="color: #c0392b;">@@</span> hi - lo + 1
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Top</span> -&gt; infinity
+<span style="color: #ff4500;">;;</span>
+
+<span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">This is not authorized. </span><span style="color: #95a5a6;">*)</span>
+<span style="color: #34495e;">let</span> <span style="color: #9b59b6;">interval</span> = <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Top</span> <span style="color: #ff4500;">;;</span>
+
+<span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">This is for the [top] function is part of the module signatures. </span><span style="color: #95a5a6;">*)</span>
+<span style="color: #34495e;">let</span> <span style="color: #9b59b6;">top2</span> = top <span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgc6bbf63" class="outline-4">
+<h4 id="orgc6bbf63"><span class="section-number-4">5.3.3</span> abstract</h4>
+<div class="outline-text-4" id="text-5-3-3">
+<p>
+Abstract types can be constructed &amp; destructed only be predefined functions
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #34495e;">module</span> <span style="color: #2492db; font-weight: bold;">Interval</span> : <span style="color: #34495e;">sig</span>
+  <span style="color: #34495e;">type</span> <span style="color: #9b59b6;">t</span> <span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">opaque to the outside world </span><span style="color: #95a5a6;">*)</span>
+  <span style="color: #34495e;">val</span> <span style="color: #8e44ad; font-weight: bold;">ival</span> : <span style="color: #0a74b9;">lo</span>:int -&gt; <span style="color: #0a74b9;">hi</span>:int -&gt; t <span style="color: #ff4500;">;;</span>
+  <span style="color: #34495e;">val</span> <span style="color: #8e44ad; font-weight: bold;">top</span> : t
+
+  <span style="color: #34495e;">val</span> <span style="color: #8e44ad; font-weight: bold;">is_top</span> : t -&gt; bool
+  <span style="color: #34495e;">val</span> <span style="color: #8e44ad; font-weight: bold;">lo</span> : t -&gt; int <span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">raises an exception </span><span style="color: #95a5a6;">*)</span>
+  <span style="color: #34495e;">val</span> <span style="color: #8e44ad; font-weight: bold;">hi</span> : t -&gt; int
+<span style="color: #34495e;">end</span> = <span style="color: #34495e;">struct</span>
+  <span style="color: #34495e;">type</span> <span style="color: #9b59b6;">t</span> =
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Ival</span> <span style="color: #2980b9;">of</span> <span style="color: #7f8c8d;">{</span> lo : int; hi : int; <span style="color: #7f8c8d;">}</span>
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Top</span>
+  <span style="color: #ff4500;">;;</span>
+
+  <span style="color: #34495e;">let</span> <span style="color: #9b59b6;">top</span> = <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Top</span> <span style="color: #ff4500;">;;</span>
+
+  <span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">ival</span> ~<span style="color: #9b59b6;">lo</span> ~<span style="color: #9b59b6;">hi</span> =
+    <span style="color: #2980b9;">assert</span> <span style="color: #7f8c8d;">(</span>lo &lt;= hi<span style="color: #7f8c8d;">)</span>;
+    <span style="color: #2980b9;">if</span> lo = min_int <span style="color: #c0392b;">&amp;&amp;</span> hi = max_int <span style="color: #2980b9;">then</span> top
+    <span style="color: #2980b9;">else</span> <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Ival</span> <span style="color: #7f8c8d;">{</span>lo; hi;<span style="color: #7f8c8d;">}</span>
+  <span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">end</span>
+<span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">open </span><span style="color: #2492db; font-weight: bold;">Interval</span>
+
+<span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">Pattern-matching does not work anymore </span><span style="color: #95a5a6;">*)</span>
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">size</span> <span style="color: #9b59b6;">ival</span> =
+  <span style="color: #2980b9;">if</span> is_top ival <span style="color: #2980b9;">then</span> infinity
+  <span style="color: #2980b9;">else</span>  hi ival - lo ival + 1
+<span style="color: #ff4500;">;;</span>
+
+<span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">This is still not authorized. </span><span style="color: #95a5a6;">*)</span>
+<span style="color: #34495e;">let</span> <span style="color: #9b59b6;">interval</span> = <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Top</span> <span style="color: #ff4500;">;;</span>
+
+<span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">This is for the [top] function is part of the module signatures. </span><span style="color: #95a5a6;">*)</span>
+<span style="color: #34495e;">let</span> <span style="color: #9b59b6;">top2</span> = top <span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgb7e8c87" class="outline-3">
+<h3 id="orgb7e8c87"><span class="section-number-3">5.4</span> Genericity</h3>
+<div class="outline-text-3" id="text-5-4">
+</div>
+<div id="outline-container-org23ac444" class="outline-4">
+<h4 id="org23ac444"><span class="section-number-4">5.4.1</span> Ad-hoc polymorphism</h4>
+<div class="outline-text-4" id="text-5-4-1">
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #34495e;">let</span> <span style="color: #34495e;">rec</span> <span style="color: #8e44ad; font-weight: bold;">length</span> <span style="color: #2980b9;">match</span> <span style="color: #9b59b6;">l</span> <span style="color: #2980b9;">with</span>
+  | <span style="color: #7f8c8d; background-color: #ffffff; font-weight: bold;">[]</span> -&gt; 0
+  | <span style="color: #9b59b6;">_</span> <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">::</span> l' -&gt; 1 + length l'
+<span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4b67afd" class="outline-4">
+<h4 id="org4b67afd"><span class="section-number-4">5.4.2</span> Functors (module generator)</h4>
+<div class="outline-text-4" id="text-5-4-2">
+<p>
+The standard library has functors for sets, maps (tree-based persistent
+dictionaries) and hashtables.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #34495e;">module type</span> <span style="color: #2492db; font-weight: bold;">PRINTABLE</span> = <span style="color: #34495e;">sig</span>
+  <span style="color: #34495e;">type</span> <span style="color: #9b59b6;">t</span>
+  <span style="color: #34495e;">val</span> <span style="color: #8e44ad; font-weight: bold;">pp</span>: <span style="color: #2492db; font-weight: bold;">Format.</span>formatter -&gt; t -&gt; unit
+<span style="color: #34495e;">end</span>
+
+
+<span style="color: #34495e;">module</span> <span style="color: #2492db; font-weight: bold;">List_printer</span><span style="color: #7f8c8d;">(</span><span style="color: #9b59b6;">X:</span><span style="color: #9b59b6;">PRINTABLE</span><span style="color: #7f8c8d;">)</span><span style="color: #9b59b6;"> </span>= <span style="color: #34495e;">struct</span>
+  <span style="color: #34495e;">type</span> <span style="color: #9b59b6;">printer_func</span> = <span style="color: #2492db; font-weight: bold;">Format.</span>formatter -&gt; unit -&gt; unit
+
+  <span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">pp_list</span>
+        ?<span style="color: #7f8c8d;">(</span><span style="color: #9b59b6;">pre</span>=<span style="color: #2c3e50;">(</span><span style="color: #2980b9;">fun</span> <span style="color: #9b59b6;">ppf</span> <span style="color: #16a085;">()</span> -&gt; <span style="color: #2492db; font-weight: bold;">Format.</span>pp_print_string ppf <span style="color: #27ae60;">"["</span><span style="color: #2c3e50;">)</span><span style="color: #7f8c8d;">)</span>
+        ?<span style="color: #7f8c8d;">(</span><span style="color: #9b59b6;">post</span>=<span style="color: #2c3e50;">(</span><span style="color: #2980b9;">fun</span> <span style="color: #9b59b6;">ppf</span> <span style="color: #16a085;">()</span> -&gt; <span style="color: #2492db; font-weight: bold;">Format.</span>pp_print_string ppf <span style="color: #27ae60;">"]"</span><span style="color: #2c3e50;">)</span><span style="color: #7f8c8d;">)</span>
+        ?<span style="color: #7f8c8d;">(</span><span style="color: #9b59b6;">sep</span>=<span style="color: #2c3e50;">(</span><span style="color: #2980b9;">fun</span> <span style="color: #9b59b6;">ppf</span> <span style="color: #16a085;">()</span> -&gt; <span style="color: #2492db; font-weight: bold;">Format.</span>fprintf ppf <span style="color: #27ae60;">";@ "</span><span style="color: #2c3e50;">)</span><span style="color: #7f8c8d;">)</span>
+        <span style="color: #9b59b6;">ppf</span> <span style="color: #9b59b6;">l</span> =
+    <span style="color: #34495e;">let</span> <span style="color: #34495e;">open </span><span style="color: #2492db; font-weight: bold;">Format</span> <span style="color: #34495e;">in</span>
+    <span style="color: #34495e;">let</span> <span style="color: #34495e;">rec</span> <span style="color: #8e44ad; font-weight: bold;">loop</span> = <span style="color: #2980b9;">function</span>
+      | <span style="color: #7f8c8d; background-color: #ffffff; font-weight: bold;">[]</span> -&gt; post ppf <span style="color: #7f8c8d;">()</span>
+      | e <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">::</span> es -&gt;
+         <span style="color: #34495e;">begin</span>
+           <span style="color: #2492db; font-weight: bold;">X.</span>pp ppf e;
+           sep ppf <span style="color: #7f8c8d;">()</span>;
+           loop es
+         <span style="color: #34495e;">end</span>
+    <span style="color: #34495e;">in</span> pre ppf <span style="color: #7f8c8d;">()</span>; loop l
+  <span style="color: #ff4500;">;;</span>
+<span style="color: #34495e;">end</span>
+
+<span style="color: #34495e;">module</span> <span style="color: #2492db; font-weight: bold;">Int_list_pp</span> =
+  <span style="color: #2492db; font-weight: bold;">List_printer</span><span style="color: #7f8c8d;">(</span><span style="color: #34495e;">struct</span> <span style="color: #34495e;">type</span> <span style="color: #9b59b6;">t</span> = int <span style="color: #34495e;">let</span> <span style="color: #9b59b6;">pp</span> = <span style="color: #2492db; font-weight: bold;">Format.</span>pp_print_int <span style="color: #34495e;">end</span><span style="color: #7f8c8d;">)</span>
+<span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">pp</span> = <span style="color: #2980b9;">fun</span> <span style="color: #9b59b6;">ppf</span> <span style="color: #9b59b6;">l</span> -&gt; <span style="color: #2492db; font-weight: bold;">Int_list_pp.</span>pp_list ppf l <span style="color: #34495e;">in</span>
+pp <span style="color: #2492db; font-weight: bold;">Format.</span>std_formatter <span style="color: #7f8c8d;">[</span>1;2;3<span style="color: #7f8c8d;">]</span> <span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">module</span> <span style="color: #2492db; font-weight: bold;">String_list_pp</span> =
+  <span style="color: #2492db; font-weight: bold;">List_printer</span><span style="color: #7f8c8d;">(</span><span style="color: #34495e;">struct</span> <span style="color: #34495e;">type</span> <span style="color: #9b59b6;">t</span> = string <span style="color: #34495e;">let</span> <span style="color: #9b59b6;">pp</span> = <span style="color: #2492db; font-weight: bold;">Format.</span>pp_print_string <span style="color: #34495e;">end</span><span style="color: #7f8c8d;">)</span>
+<span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">pp_slist</span> = <span style="color: #2980b9;">fun</span> <span style="color: #9b59b6;">ppf</span> <span style="color: #9b59b6;">l</span> -&gt; <span style="color: #2492db; font-weight: bold;">String_list_pp.</span>pp_list ppf l<span style="color: #ff4500;">;;</span>
+<span style="color: #2492db; font-weight: bold;">Format.</span>printf <span style="color: #27ae60;">"@[&lt;h&gt;%a@]"</span> pp_slist  <span style="color: #7f8c8d;">[</span><span style="color: #27ae60;">"foo"</span>; <span style="color: #27ae60;">"bar"</span>; <span style="color: #27ae60;">"bar"</span>;<span style="color: #7f8c8d;">]</span> <span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6a86c4b" class="outline-3">
+<h3 id="org6a86c4b"><span class="section-number-3">5.5</span> First-order modules</h3>
+<div class="outline-text-3" id="text-5-5">
+<p>
+Modules can also be used as "first-class" values.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #34495e;">module type</span> <span style="color: #2492db; font-weight: bold;">COMPARABLE</span> = <span style="color: #34495e;">sig</span>
+  <span style="color: #34495e;">type</span> <span style="color: #9b59b6;">t</span>
+  <span style="color: #34495e;">val</span> <span style="color: #8e44ad; font-weight: bold;">compare</span> : t -&gt; t -&gt; int
+<span style="color: #34495e;">end</span>
+<span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">lmax</span> <span style="color: #7f8c8d;">(</span><span style="color: #2980b9;">type</span> <span style="color: #9b59b6;">a</span><span style="color: #7f8c8d;">)</span> <span style="color: #7f8c8d;">(</span><span style="color: #2980b9;">module</span> <span style="color: #2492db; font-weight: bold;">M</span>:<span style="color: #2492db; font-weight: bold;">COMPARABLE with type t </span>=<span style="color: #2492db; font-weight: bold;"> a</span><span style="color: #7f8c8d;">)</span> <span style="color: #7f8c8d;">(</span><span style="color: #9b59b6;">l</span>:<span style="color: #9b59b6;">a list</span><span style="color: #7f8c8d;">)</span> =
+  <span style="color: #34495e;">let</span> <span style="color: #34495e;">rec</span> <span style="color: #8e44ad; font-weight: bold;">aux</span> <span style="color: #9b59b6;">cur_max</span> <span style="color: #9b59b6;">l</span> =
+    <span style="color: #2980b9;">match</span> l <span style="color: #2980b9;">with</span>
+    | <span style="color: #7f8c8d; background-color: #ffffff; font-weight: bold;">[]</span> -&gt; cur_max
+    | x <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">::</span> xs -&gt;
+       <span style="color: #34495e;">let</span> <span style="color: #9b59b6;">cur_max'</span> =
+         <span style="color: #2980b9;">match</span> cur_max <span style="color: #2980b9;">with</span>
+         | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">None</span> -&gt; <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Some</span> x
+         | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Some</span> vmax -&gt; <span style="color: #2980b9;">if</span> <span style="color: #2492db; font-weight: bold;">M.</span>compare x vmax &gt; 0 <span style="color: #2980b9;">then</span> <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Some</span> x <span style="color: #2980b9;">else</span> cur_max <span style="color: #34495e;">in</span>
+       aux cur_max' xs
+  <span style="color: #34495e;">in</span> aux <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">None</span> l
+<span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">module</span> <span style="color: #2492db; font-weight: bold;">Int</span> = <span style="color: #34495e;">struct</span>
+  <span style="color: #34495e;">type</span> <span style="color: #9b59b6;">t</span> = int <span style="color: #ff4500;">;;</span>
+  <span style="color: #34495e;">let</span> <span style="color: #9b59b6;">compare</span> = <span style="color: #2492db; font-weight: bold;">Pervasives.</span>compare <span style="color: #ff4500;">;;</span>
+<span style="color: #34495e;">end</span>
+<span style="color: #ff4500;">;;</span>
+
+lmax <span style="color: #7f8c8d;">(</span><span style="color: #2980b9;">module</span> <span style="color: #2492db; font-weight: bold;">Int</span><span style="color: #7f8c8d;">)</span> <span style="color: #7f8c8d;">[</span>1;2;3;<span style="color: #7f8c8d;">]</span> <span style="color: #ff4500;">;;</span>
+
+<span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">Module [String] is part of the standard library </span><span style="color: #95a5a6;">*)</span>
+lmax <span style="color: #7f8c8d;">(</span><span style="color: #2980b9;">module</span> <span style="color: #2492db; font-weight: bold;">String</span><span style="color: #7f8c8d;">)</span> <span style="color: #7f8c8d;">[</span><span style="color: #27ae60;">"foo"</span>; <span style="color: #27ae60;">"bar"</span>; <span style="color: #27ae60;">"baz"</span>;<span style="color: #7f8c8d;">]</span> <span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org741e090" class="outline-4">
+<h4 id="org741e090"><span class="section-number-4">5.5.1</span> More involved example</h4>
+<div class="outline-text-4" id="text-5-5-1">
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #34495e;">type</span> <span style="color: #7f8c8d;">(</span><span style="color: #9b59b6;">'var,'cst,'bop,'uop</span><span style="color: #7f8c8d;">)</span><span style="color: #9b59b6;"> expr</span> =
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Var</span> <span style="color: #2980b9;">of</span> 'var
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Cst</span> <span style="color: #2980b9;">of</span> 'cst
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Bop</span> <span style="color: #2980b9;">of</span> 'bop * <span style="color: #7f8c8d;">(</span>'var,'cst,'bop,'uop<span style="color: #7f8c8d;">)</span> expr * <span style="color: #7f8c8d;">(</span>'var,'cst,'bop,'uop<span style="color: #7f8c8d;">)</span> expr
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Uop</span> <span style="color: #2980b9;">of</span> 'uop * <span style="color: #7f8c8d;">(</span>'var,'cst,'bop,'uop<span style="color: #7f8c8d;">)</span> expr
+<span style="color: #ff4500;">;;</span>
+
+
+<span style="color: #34495e;">module type</span> <span style="color: #2492db; font-weight: bold;">EXPR</span> = <span style="color: #34495e;">sig</span>
+  <span style="color: #34495e;">type</span> <span style="color: #9b59b6;">var</span>
+  <span style="color: #34495e;">type</span> <span style="color: #9b59b6;">uop</span>
+  <span style="color: #34495e;">type</span> <span style="color: #9b59b6;">cst</span>
+  <span style="color: #34495e;">type</span> <span style="color: #9b59b6;">bop</span>
+<span style="color: #34495e;">end</span>
+
+<span style="color: #34495e;">module</span> <span style="color: #2492db; font-weight: bold;">Bool</span> = <span style="color: #34495e;">struct</span>
+  <span style="color: #34495e;">type</span> <span style="color: #9b59b6;">bop</span> =
+    | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Band</span>
+    | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Bor</span>
+    | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Bxor</span>
+  <span style="color: #ff4500;">;;</span>
+
+  <span style="color: #34495e;">type</span> <span style="color: #9b59b6;">uop</span> = <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Bnot</span>
+
+  <span style="color: #34495e;">type</span> <span style="color: #9b59b6;">var</span> = string
+
+  <span style="color: #34495e;">type</span> <span style="color: #9b59b6;">cst</span> = bool
+<span style="color: #34495e;">end</span>
+
+
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">free_variables</span>
+      <span style="color: #7f8c8d;">(</span><span style="color: #2980b9;">type</span> <span style="color: #9b59b6;">a</span> <span style="color: #9b59b6;">b</span> <span style="color: #9b59b6;">c</span> <span style="color: #9b59b6;">d</span><span style="color: #7f8c8d;">)</span>
+      <span style="color: #7f8c8d;">(</span><span style="color: #2980b9;">module</span> <span style="color: #2492db; font-weight: bold;">M</span>:<span style="color: #2492db; font-weight: bold;">EXPR with type var </span>=<span style="color: #2492db; font-weight: bold;"> a and</span>
+<span style="color: #2492db; font-weight: bold;">                          type cst </span>=<span style="color: #2492db; font-weight: bold;"> b and</span>
+<span style="color: #2492db; font-weight: bold;">                          type bop </span>=<span style="color: #2492db; font-weight: bold;"> c and</span>
+<span style="color: #2492db; font-weight: bold;">                          type uop </span>=<span style="color: #2492db; font-weight: bold;"> d</span><span style="color: #7f8c8d;">)</span>
+      <span style="color: #7f8c8d;">(</span><span style="color: #9b59b6;">e</span>:<span style="color: #2c3e50;">(</span><span style="color: #9b59b6;">a,b,c,d</span><span style="color: #2c3e50;">)</span><span style="color: #9b59b6;"> expr</span><span style="color: #7f8c8d;">)</span> :<span style="color: #9b59b6;"> a list </span>=
+  <span style="color: #34495e;">let</span> <span style="color: #34495e;">module</span> <span style="color: #2492db; font-weight: bold;">S</span> =
+    <span style="color: #2492db; font-weight: bold;">Set.Make</span><span style="color: #7f8c8d;">(</span><span style="color: #34495e;">struct</span> <span style="color: #34495e;">type</span> <span style="color: #9b59b6;">t</span> = <span style="color: #2492db; font-weight: bold;">M.</span>var <span style="color: #34495e;">let</span> <span style="color: #9b59b6;">compare</span> = <span style="color: #2492db; font-weight: bold;">Pervasives.</span>compare <span style="color: #34495e;">end</span><span style="color: #7f8c8d;">)</span> <span style="color: #34495e;">in</span>
+  <span style="color: #34495e;">let</span> <span style="color: #34495e;">rec</span> <span style="color: #8e44ad; font-weight: bold;">loop</span> <span style="color: #7f8c8d;">(</span><span style="color: #9b59b6;">set</span>:<span style="color: #9b59b6;">S.t</span><span style="color: #7f8c8d;">)</span> = <span style="color: #2980b9;">function</span>
+    | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Var</span> v -&gt; <span style="color: #2492db; font-weight: bold;">S.</span>add v set
+    | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Cst</span> _ -&gt; set
+    | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Bop</span> <span style="color: #7f8c8d;">(</span>_, e1, e2<span style="color: #7f8c8d;">)</span> -&gt; <span style="color: #2492db; font-weight: bold;">S.</span>union <span style="color: #7f8c8d;">(</span>loop set e1<span style="color: #7f8c8d;">)</span> <span style="color: #7f8c8d;">(</span>loop <span style="color: #2492db; font-weight: bold;">S.</span>empty e2<span style="color: #7f8c8d;">)</span>
+    | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Uop</span> <span style="color: #7f8c8d;">(</span>_, e<span style="color: #7f8c8d;">)</span> -&gt; loop set e
+  <span style="color: #34495e;">in</span>
+  <span style="color: #34495e;">let</span> <span style="color: #9b59b6;">set</span> = loop <span style="color: #2492db; font-weight: bold;">S.</span>empty e <span style="color: #34495e;">in</span>
+  <span style="color: #2492db; font-weight: bold;">S.</span>fold <span style="color: #7f8c8d;">(</span><span style="color: #2980b9;">fun</span> <span style="color: #9b59b6;">e</span> <span style="color: #9b59b6;">l</span> -&gt; e <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">::</span> l<span style="color: #7f8c8d;">)</span> set <span style="color: #7f8c8d; background-color: #ffffff; font-weight: bold;">[]</span>
+<span style="color: #ff4500;">;;</span>
+
+free_variables <span style="color: #7f8c8d;">(</span><span style="color: #2980b9;">module</span> <span style="color: #2492db; font-weight: bold;">Bool</span><span style="color: #7f8c8d;">)</span> <span style="color: #7f8c8d;">(</span><span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Var</span> <span style="color: #27ae60;">"foo"</span><span style="color: #7f8c8d;">)</span> <span style="color: #ff4500;">;;</span>
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgde7972a" class="outline-3">
+<h3 id="orgde7972a"><span class="section-number-3">5.6</span> Monadic style programming</h3>
+<div class="outline-text-3" id="text-5-6">
+<p>
+The following type has been making a comeback.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #34495e;">type</span> <span style="color: #7f8c8d;">(</span><span style="color: #9b59b6;">'a, 'b</span><span style="color: #7f8c8d;">)</span><span style="color: #9b59b6;"> result</span> =
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Ok</span> <span style="color: #2980b9;">of</span> 'a
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Error</span> <span style="color: #2980b9;">of</span> 'b
+<span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+
+
+<p>
+and with it loads of heretofore banished monads :-)
+</p>
+
+<p>
+There is no dedicated notation for working inside monads.
+</p>
+
+<p>
+One usually uses the <code>M.bind</code> function of monad <code>M</code> or define an infix
+operator
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #34495e;">let</span> <span style="color: #7f8c8d;">(</span><span style="color: #8e44ad; font-weight: bold;">&gt;&gt;=</span><span style="color: #7f8c8d;">)</span> = <span style="color: #2492db; font-weight: bold;">Option.</span>bind <span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">let</span> <span style="color: #9b59b6;">hd</span> =
+  | <span style="color: #7f8c8d; background-color: #ffffff; font-weight: bold;">[]</span> -&gt; <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">None</span>
+  | x <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">::</span> _ -&gt; <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Some</span> x
+
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">sum_heads</span> <span style="color: #9b59b6;">l1</span> <span style="color: #9b59b6;">l2</span> =
+  hd l1 &gt;&gt;=
+    <span style="color: #2980b9;">fun</span> <span style="color: #9b59b6;">v1</span> -&gt; hd l2 &gt;&gt;=
+    <span style="color: #2980b9;">fun</span> <span style="color: #9b59b6;">v2</span> -&gt; v1 + v2
+<span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4da8ffd" class="outline-3">
+<h3 id="org4da8ffd"><span class="section-number-3">5.7</span> GADTs</h3>
+<div class="outline-text-3" id="text-5-7">
+<p>
+Generalized Abstract Data Types are available in <code>OCaml</code> since version
+<code>4.00</code>.
+</p>
+
+<p>
+They are sparsely used
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #34495e;">type</span> <span style="color: #9b59b6;">arith_bop</span> =
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Add</span>
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Mul</span>
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Div</span>
+<span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">type</span> <span style="color: #9b59b6;">arith_uop</span> =
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">UMin</span>
+<span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">type</span> <span style="color: #9b59b6;">comparison</span> =
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Eq</span>
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Gt</span>
+<span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">type</span> <span style="color: #9b59b6;">bool_bop</span> =
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Bor</span>
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Band</span>
+<span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">type</span> <span style="color: #9b59b6;">bool_uop</span> =
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Bnot</span>
+<span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">type</span> <span style="color: #9b59b6;">_ typ</span> =
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Int</span>  : int -&gt; int typ
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Bool</span> : bool -&gt; bool typ
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Ite</span>  : bool typ * 'a typ * 'a typ -&gt; 'a typ
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Bar</span>  : arith_bop * int typ * int typ -&gt; int typ
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Uar</span>  : arith_uop * int typ -&gt; int typ
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Cmp</span>  : comparison * 'a typ * 'a typ -&gt; bool typ
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Bbo</span>  : bool_bop * bool typ * bool typ -&gt; bool typ
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Ubo</span>  : bool_uop * bool typ -&gt; bool typ
+<span style="color: #ff4500;">;;</span>
+
+
+<span style="color: #34495e;">let</span> <span style="color: #9b59b6;">term</span> = <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Ite</span> <span style="color: #7f8c8d;">(</span> <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Cmp</span> <span style="color: #2c3e50;">(</span><span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Eq</span>, <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Int</span> 3, <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Int</span> 4<span style="color: #2c3e50;">)</span>, <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Int</span> 12, <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Int</span> 11<span style="color: #7f8c8d;">)</span> <span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">let</span> <span style="color: #9b59b6;">term2</span> = <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Ite</span> <span style="color: #7f8c8d;">(</span> <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Cmp</span> <span style="color: #2c3e50;">(</span><span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Eq</span>, <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Int</span> 3, <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Int</span><span style="color: #2c3e50;">)</span>, <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Bool</span> <span style="color: #d35400;">true</span>, <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Bool</span> <span style="color: #d35400;">false</span><span style="color: #7f8c8d;">)</span> <span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">eval_abop</span> = <span style="color: #2980b9;">function</span>
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Add</span> -&gt; <span style="color: #7f8c8d;">(</span> <span style="color: #8e44ad; font-weight: bold;">+</span> <span style="color: #7f8c8d;">)</span>
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Mul</span> -&gt; <span style="color: #7f8c8d;">(</span> <span style="color: #8e44ad; font-weight: bold;">*</span> <span style="color: #7f8c8d;">)</span>
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Div</span> -&gt; <span style="color: #7f8c8d;">(</span> <span style="color: #8e44ad; font-weight: bold;">/</span> <span style="color: #7f8c8d;">)</span>
+
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">eval_cmp</span> = <span style="color: #2980b9;">function</span>
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Eq</span> -&gt; <span style="color: #7f8c8d;">(</span> <span style="color: #8e44ad; font-weight: bold;">=</span> <span style="color: #7f8c8d;">)</span>
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Gt</span> -&gt; <span style="color: #7f8c8d;">(</span> <span style="color: #8e44ad; font-weight: bold;">&gt;</span> <span style="color: #7f8c8d;">)</span>
+
+<span style="color: #34495e;">let</span> <span style="color: #8e44ad; font-weight: bold;">eval_bbop</span> = <span style="color: #2980b9;">function</span>
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Bor</span> -&gt; <span style="color: #7f8c8d;">(</span> <span style="color: #8e44ad; font-weight: bold;">||</span> <span style="color: #7f8c8d;">)</span>
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Band</span> -&gt; <span style="color: #7f8c8d;">(</span> <span style="color: #8e44ad; font-weight: bold;">&amp;&amp;</span> <span style="color: #7f8c8d;">)</span>
+
+<span style="color: #34495e;">let</span> <span style="color: #34495e;">rec</span> <span style="color: #8e44ad; font-weight: bold;">eval</span>:<span style="color: #9b59b6;"> </span><span style="color: #2980b9;">type</span><span style="color: #9b59b6;"> a. a typ -&gt; a  </span>= <span style="color: #2980b9;">function</span>
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Int</span> n -&gt; n
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Bool</span> b -&gt; b
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Ite</span> <span style="color: #7f8c8d;">(</span>b, ethen, eelse<span style="color: #7f8c8d;">)</span> -&gt; <span style="color: #2980b9;">if</span> eval b <span style="color: #2980b9;">then</span> eval ethen <span style="color: #2980b9;">else</span> eval eelse
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Bar</span> <span style="color: #7f8c8d;">(</span>op, e1, e2<span style="color: #7f8c8d;">)</span> -&gt; <span style="color: #7f8c8d;">(</span>eval_abop op<span style="color: #7f8c8d;">)</span> <span style="color: #7f8c8d;">(</span>eval e1<span style="color: #7f8c8d;">)</span> <span style="color: #7f8c8d;">(</span>eval e2<span style="color: #7f8c8d;">)</span>
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Uar</span> <span style="color: #7f8c8d;">(</span><span style="color: #34495e; background-color: #ffffff; font-weight: bold;">UMin</span>, e<span style="color: #7f8c8d;">)</span> -&gt; - <span style="color: #7f8c8d;">(</span>eval e<span style="color: #7f8c8d;">)</span>
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Cmp</span> <span style="color: #7f8c8d;">(</span>op, e1, e2<span style="color: #7f8c8d;">)</span> -&gt; <span style="color: #7f8c8d;">(</span>eval_cmp op<span style="color: #7f8c8d;">)</span> <span style="color: #7f8c8d;">(</span>eval e1<span style="color: #7f8c8d;">)</span> <span style="color: #7f8c8d;">(</span>eval e2<span style="color: #7f8c8d;">)</span>
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Bbo</span> <span style="color: #7f8c8d;">(</span>op, e1, e2<span style="color: #7f8c8d;">)</span> -&gt; <span style="color: #7f8c8d;">(</span>eval_bbop op<span style="color: #7f8c8d;">)</span> <span style="color: #7f8c8d;">(</span>eval e1<span style="color: #7f8c8d;">)</span> <span style="color: #7f8c8d;">(</span>eval e2<span style="color: #7f8c8d;">)</span>
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Ubo</span> <span style="color: #7f8c8d;">(</span><span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Bnot</span>, e<span style="color: #7f8c8d;">)</span> -&gt; <span style="color: #c0392b;">not</span> <span style="color: #7f8c8d;">(</span>eval e<span style="color: #7f8c8d;">)</span>
+<span style="color: #ff4500;">;;</span>
+
+eval term <span style="color: #ff4500;">;;</span>
+
+eval term2 <span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-org75ce934" class="outline-3">
+<h3 id="org75ce934"><span class="section-number-3">5.8</span> Death by GADTs</h3>
+<div class="outline-text-3" id="text-5-8">
+<p>
+With great expressiveness comes great unreadability ;-)
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">in tdlib/camlinternalFormatBasics.ml </span><span style="color: #95a5a6;">*)</span>
+<span style="color: #34495e;">and</span> <span style="color: #7f8c8d;">(</span>'a1, 'b1, 'c1, 'd1, 'e1, 'f1,
+     'a2, 'b2, 'c2, 'd2, 'e2, 'f2<span style="color: #7f8c8d;">)</span> <span style="color: #9b59b6;">fmtty_rel</span> =
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Char_ty</span> :                                                 <span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">%c  </span><span style="color: #95a5a6;">*)</span>
+      <span style="color: #7f8c8d;">(</span>'a1, 'b1, 'c1, 'd1, 'e1, 'f1,
+       'a2, 'b2, 'c2, 'd2, 'e2, 'f2<span style="color: #7f8c8d;">)</span> fmtty_rel -&gt;
+      <span style="color: #7f8c8d;">(</span>char -&gt; 'a1, 'b1, 'c1, 'd1, 'e1, 'f1,
+       char -&gt; 'a2, 'b2, 'c2, 'd2, 'e2, 'f2<span style="color: #7f8c8d;">)</span> fmtty_rel
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">String_ty</span> :                                               <span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">%s  </span><span style="color: #95a5a6;">*)</span>
+      <span style="color: #7f8c8d;">(</span>'a1, 'b1, 'c1, 'd1, 'e1, 'f1,
+       'a2, 'b2, 'c2, 'd2, 'e2, 'f2<span style="color: #7f8c8d;">)</span> fmtty_rel -&gt;
+      <span style="color: #7f8c8d;">(</span>string -&gt; 'a1, 'b1, 'c1, 'd1, 'e1, 'f1,
+       string -&gt; 'a2, 'b2, 'c2, 'd2, 'e2, 'f2<span style="color: #7f8c8d;">)</span> fmtty_rel
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Int_ty</span> :                                                  <span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">%d  </span><span style="color: #95a5a6;">*)</span>
+      <span style="color: #7f8c8d;">(</span>'a1, 'b1, 'c1, 'd1, 'e1, 'f1,
+       'a2, 'b2, 'c2, 'd2, 'e2, 'f2<span style="color: #7f8c8d;">)</span> fmtty_rel -&gt;
+      <span style="color: #7f8c8d;">(</span>int -&gt; 'a1, 'b1, 'c1, 'd1, 'e1, 'f1,
+       int -&gt; 'a2, 'b2, 'c2, 'd2, 'e2, 'f2<span style="color: #7f8c8d;">)</span> fmtty_rel
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Int32_ty</span> :                                                <span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">%ld </span><span style="color: #95a5a6;">*)</span>
+      <span style="color: #7f8c8d;">(</span>'a1, 'b1, 'c1, 'd1, 'e1, 'f1,
+       'a2, 'b2, 'c2, 'd2, 'e2, 'f2<span style="color: #7f8c8d;">)</span> fmtty_rel -&gt;
+      <span style="color: #7f8c8d;">(</span>int32 -&gt; 'a1, 'b1, 'c1, 'd1, 'e1, 'f1,
+       int32 -&gt; 'a2, 'b2, 'c2, 'd2, 'e2, 'f2<span style="color: #7f8c8d;">)</span> fmtty_rel
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #95a5a6;">(* </span><span style="color: #95a5a6; font-style: italic;">same file </span><span style="color: #95a5a6;">*)</span>
+<span style="color: #34495e;">let</span> <span style="color: #34495e;">rec</span> <span style="color: #9b59b6;">erase_rel</span> : <span style="color: #2980b9;">type</span> <span style="color: #9b59b6;">a</span> b c d e f g h i j k l .
+  <span style="color: #7f8c8d;">(</span>a, b, c, d, e, f,
+   g, h, i, j, k, l<span style="color: #7f8c8d;">)</span> fmtty_rel -&gt; <span style="color: #7f8c8d;">(</span>a, b, c, d, e, f<span style="color: #7f8c8d;">)</span> fmtty
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org440fc7b" class="outline-3">
+<h3 id="org440fc7b"><span class="section-number-3">5.9</span> <code>Format</code>'ing text</h3>
+<div class="outline-text-3" id="text-5-9">
+<p>
+The <code>Format</code> module is a nice <code>printf</code>-like pretty-printing facility
+available in the standard library. This helps outputting structured data in a
+good-looking way.
+</p>
+
+<p>
+A <code>Format</code>-ted output mixes <b>boxes</b> and <b>break hints</b> to structure your output.
+</p>
+
+<p>
+3 salient elements to think about
+</p>
+<ul class="org-ul">
+<li><code>Format.fprintf</code></li>
+<li>the formatter abstraction</li>
+<li><code>%a</code> : chaining pretty printers</li>
+</ul>
+
+
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #34495e;">type</span> <span style="color: #9b59b6;">t</span> =
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Int</span> <span style="color: #2980b9;">of</span> int
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Add</span> <span style="color: #2980b9;">of</span> t * t
+<span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">open </span><span style="color: #2492db; font-weight: bold;">Format</span> <span style="color: #ff4500;">;;</span>
+
+<span style="color: #34495e;">let</span> <span style="color: #34495e;">rec</span> <span style="color: #8e44ad; font-weight: bold;">pp_expr</span> <span style="color: #9b59b6;">ppf</span> = <span style="color: #2980b9;">function</span>
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Int</span> n -&gt; fprintf ppf <span style="color: #27ae60;">"%i"</span> n
+  | <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Add</span> <span style="color: #7f8c8d;">(</span>e1, e2<span style="color: #7f8c8d;">)</span> -&gt;
+     fprintf ppf <span style="color: #27ae60;">"@[%a@ +@ %a@]"</span>
+       pp_expression e1
+       pp_expression e2
+
+<span style="color: #34495e;">and</span> <span style="color: #8e44ad; font-weight: bold;">pp_expression</span> <span style="color: #9b59b6;">ppf</span> =
+  fprintf ppf <span style="color: #27ae60;">"@[%a@]"</span> pp_expr
+<span style="color: #ff4500;">;;</span>
+
+
+<span style="color: #34495e;">let</span> <span style="color: #34495e;">rec</span> <span style="color: #8e44ad; font-weight: bold;">addition_list</span> = <span style="color: #2980b9;">function</span>
+  | <span style="color: #7f8c8d; background-color: #ffffff; font-weight: bold;">[]</span> -&gt; <span style="color: #2980b9;">assert</span> <span style="color: #d35400;">false</span>
+  | <span style="color: #7f8c8d;">[</span>n<span style="color: #7f8c8d;">]</span> -&gt; <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Int</span> n
+  | x <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">::</span> xs -&gt; <span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Add</span> <span style="color: #7f8c8d;">(</span><span style="color: #34495e; background-color: #ffffff; font-weight: bold;">Int</span> x, addition_list xs<span style="color: #7f8c8d;">)</span>
+<span style="color: #ff4500;">;;</span>
+
+
+<span style="color: #34495e;">let</span> <span style="color: #9b59b6;">al</span> =
+  <span style="color: #2492db; font-weight: bold;">List.</span>map <span style="color: #7f8c8d;">(</span><span style="color: #2c3e50;">(</span> <span style="color: #8e44ad; font-weight: bold;">+</span> <span style="color: #2c3e50;">)</span> max_int<span style="color: #7f8c8d;">)</span> <span style="color: #7f8c8d;">[</span>1;2;3;4;5;6;7;<span style="color: #7f8c8d;">]</span>
+  <span style="color: #c0392b;">|&gt;</span> addition_list
+<span style="color: #ff4500;">;;</span>
+
+
+<span style="color: #2492db; font-weight: bold;">Format.</span>printf <span style="color: #27ae60;">"%a@."</span> pp_expr al<span style="color: #ff4500;">;;</span>
+</pre>
+</div>
+
+
+
+<p>
+For more:
+</p>
+<ul class="org-ul">
+<li><a href="https://hal.archives-ouvertes.fr/hal-01503081/file/format-unraveled.pdf">https://hal.archives-ouvertes.fr/hal-01503081/file/format-unraveled.pdf</a></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org9f8f447" class="outline-3">
+<h3 id="org9f8f447"><span class="section-number-3">5.10</span> Things that I did not talk about</h3>
+<div class="outline-text-3" id="text-5-10">
+<ul class="org-ul">
+<li><p>
+Polymorphic variants
+</p>
+
+<p>
+See <a href="http://www.yakobowski.org/publis/2008/jfla08.pdf">http://www.yakobowski.org/publis/2008/jfla08.pdf</a> (in French)
+</p></li>
+<li><p>
+Low-level representation
+</p>
+
+<p>
+<a href="https://v1.realworldocaml.org/v1/en/html/memory-representation-of-values.html">https://v1.realworldocaml.org/v1/en/html/memory-representation-of-values.html</a>
+</p></li>
+
+<li>Objects</li>
+<li>PPX extensions</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+
+<div id="outline-container-orgc78600b" class="outline-2">
+<h2 id="orgc78600b"><span class="section-number-2">6</span> Conclusion</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+<code>OCaml</code> is <b>not</b> a language somehow stuck into a transformation to
+<code>Haskell</code>.
+</p>
+
+<p>
+Is there something that is missing ?
+</p>
+
+<p>
+It follows different design choices, in the lineage of ML and SML.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 20200109</p>
+<p class="author">Author: Richard Bonichon</p>
+<p class="date">Created: 2020-01-08 Wed 16:13</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
