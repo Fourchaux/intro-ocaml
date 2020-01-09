@@ -2,9 +2,9 @@
 #+date: 20200109
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/setup/theme-readtheorg.setup
 
-* Preamble
+* Disclaimer
 
-  This intro is partial ;-)
+  This intro is incomplete ;-)
 
 * Introduction
 
@@ -12,23 +12,26 @@
 
    OCaml is part of the ML family, like SML (big brother) or F# (little brother).
 
-   - 1973 :: ML
+   - 1973 :: (Classical) ML
 
-     Check the foundations from http://www.nuprl.org/software/eventml/KreitzandRahli-ClassicML.pdf
+             Check the foundations from [[http://www.nuprl.org/software/eventml/KreitzandRahli-ClassicML.pdf][here]].
    - 1987-1992 :: Heavy CAML (LISP-based implementation)
    - 1990-1991 :: Caml Light
    - 1996 :: Objective Caml 1.00
    - 2011 :: Rebranding to OCaml (not O'Caml, not oCaml, ~Just OCaml~)
    - 2019 :: OCaml 4.09
 
-** OCaml : an open-minded functional language
+** OCaml : an open-minded(?) functional language
 
    It is *not* a purely functional language: imperative programming is part of
    the nominal toolbox, even OOP when it is the right fit.
 
-   The standard lib has been kept voluntarily small.
 
-   There have been various efforts to provide "batteries".
+*** Standard library
+
+    The standard lib has been kept voluntarily small.
+
+    There have been various efforts to provide "batteries".
 
 
 ** Bytecode and native code support
@@ -39,8 +42,6 @@
    2. a native code compiler (~ocamlopt~)
       - supports x86 (32/64), ARM (v5-v8), PowerPC(32/64) and ... SPARC !
       - RISC-V not yet integrated but support exists
-
-
 
 ** Users
 
@@ -53,13 +54,12 @@
    - Indirectly Airbus (Astrée, Frama-C, Fluctuat), EDF
 
 
-*** Domains
+*** Usual domains
 
     - compilers
     - program analysis
     - theorem proving
     - symbolic computations
-
 
 ** Tooling (as of )
 
@@ -195,8 +195,18 @@
 
     Evaluation order for function arguments is *unspecified*.
 
-    It is usually left-to-right, though.
+    It is usually right-to-left, though.
 
+    You can check it out with the following dummy example 
+    #+begin_src ocaml 
+      let x () = print_string "foo" in
+      let y () = print_string "bar" in
+      let f x y = () in
+      f (x ()) (y ())
+      ;;
+    #+end_src
+
+    If it prints ~"barfoo"~ the evaluation order is indeed right-to-left.
 
 ** Grouping information : Tuples
 
@@ -645,10 +655,76 @@
      For "programmatic" modules, you will use ~module type~ to abstract
      functionalities/traits and ~module~ for implementing said modules.
 
+*** Simple Functional Stacks
+    
+    Let's have a look at the usual interface/implementation separation in
+    OCaml. We'll implement functional stacks to illustrate that.
+    
+    Let's declare what a generic functional stack should offer in the ~.mli~
+    file. This interface has been kept small.
+
+    #+begin_src ocaml :tangle fstack.mli
+      (** {1 Functional stacks }*)
+
+      type 'a t
+
+      exception Empty
+
+      val empty : 'a t
+
+      val push : 'a -> 'a t -> 'a t
+
+      (** [pop s] raises an [Empty] exception if stack [s] is empty.
+          [pop (push x l)] is the pair [(x, l)].
+       ,*)
+      val pop : 'a t -> 'a * 'a t
+
+      (** [pop (push x l)] is [Some (x, l)].
+          [pop empty] is [None].
+      ,*)
+      val pop_opt : 'a t -> ('a * 'a t) option
+
+      val is_empty : 'a t -> bool
+
+      (** [fold f init s] where [s = push (a0 (push ... (push an empty)))]
+          is  [f ... f (f init a0) a1 ... an ].
+      ,*)
+      val fold : f:('b -> 'a -> 'b) -> 'b -> 'a t -> 'b
+    #+end_src
+
+    Now, let's implement it. For the representation of stacks, we'll use OCaml
+    lists, with the head of the list as the top of the stack. The implementation
+    is rather straightforward. I chose to implement ~pop_opt~ w.r.t. to
+    ~pop~. One could as well implement ~pop~ from ~pop_opt~.
+
+    #+begin_src ocaml :tangle fstack.ml
+      type 'a t = 'a list ;;
+
+      let empty = [] ;;
+
+      let push = List.cons ;;
+
+      exception Empty
+
+      let pop = function
+        | [] -> raise Empty
+        | x :: xs -> x, xs
+      ;;
+
+      let pop_opt l =
+        match pop l with
+        | exception Empty -> None
+        | res -> Some res
+      ;;
+
+      let is_empty l = (=) [] l ;;
+
+      let fold ~f acc l = List.fold_left f acc l ;;
+    #+end_src
 
 ** Levels of type abstraction
 
-   Modules help to delimit abstraction barriers and one can choose the desired
+   Modules also delimit 'type abstraction'. One can choose among 3
    level of abstraction.
 
 *** Open
@@ -689,7 +765,7 @@
                  #+end_src
 
 
-*** private
+*** Private
 
     Private types can be constructed only by predefined functions, destructed by
     usual pattern matching.
@@ -736,7 +812,7 @@
                  #+end_src
 
 
-***  abstract
+*** Abstract
 
     Abstract types can be constructed & destructed only be predefined functions
 
@@ -952,7 +1028,7 @@
    There is no dedicated notation for working inside monads.
 
    One usually uses the ~M.bind~ function of monad ~M~ or define an infix
-   operator
+   operator. Here's a very contrived example.
 
    #+begin_src ocaml
      let (>>=) = Option.bind ;;
